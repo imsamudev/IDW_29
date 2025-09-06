@@ -1,3 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --blanco: #e7ecefff;
+    --azul-fuerte: #274c77ff;
+    --azul: #6096baff;
+    --celeste: #a3cef1ff;
+    --gris: #8b8c89ff;
+}
 /* index */
 
 /* institucional */
