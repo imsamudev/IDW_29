@@ -74,6 +74,110 @@ header {
 }
 
 /* INDEX */
+/* CONTACTO */
+/* ========================= */
+.form-contacto,
+.info-contacto {
+  max-width: 500px;
+  margin: 1.5rem auto 1rem auto;
+  padding: 1.2rem 1rem;
+  border-radius: var(--borde-radius);
+  box-shadow: var(--sombra);
+}
+
+.form-contacto {
+  background: var(--celeste);
+}
+
+.form-contacto h2,
+.info-contacto h2 {
+  color: var(--azul-fuerte);
+  margin-bottom: 0.7rem;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.form-contacto form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.form-contacto label {
+  font-weight: 500;
+  color: var(--azul-fuerte);
+  margin-bottom: 0.1rem;
+  font-size: 1rem;
+}
+
+.form-contacto input[type="text"],
+.form-contacto input[type="email"],
+.form-contacto textarea {
+  padding: 0.45em 0.8em;
+  border: 1px solid var(--azul);
+  border-radius: var(--borde-radius);
+  font-size: 0.98rem;
+  background: var(--blanco);
+  color: var(--negro);
+  transition: border var(--transicion);
+  resize: vertical;
+}
+
+.form-contacto input[type="text"]:focus,
+.form-contacto input[type="email"]:focus,
+.form-contacto textarea:focus {
+  border: 1.5px solid var(--azul-fuerte);
+  outline: none;
+}
+
+.form-contacto input[type="submit"] {
+  background: var(--azul-fuerte);
+  color: var(--blanco);
+  border: none;
+  border-radius: var(--borde-radius);
+  padding: 0.5em 1em;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transicion);
+  margin-top: 0.3rem;
+}
+
+.form-contacto input[type="submit"]:hover,
+.form-contacto input[type="submit"]:focus {
+  background: var(--azul);
+}
+
+.info-contacto {
+  background: var(--azul);
+  color: var(--blanco);
+}
+
+.info-contacto h2 {
+  color: var(--blanco);
+}
+
+.info-contacto ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-contacto li {
+  margin-bottom: 0.5rem;
+  font-size: 0.98rem;
+}
+
+.info-contacto a {
+  color: var(--celeste);
+  text-decoration: underline;
+  transition: color var(--transicion);
+}
+
+.info-contacto a:hover,
+.info-contacto a:focus {
+  color: var(--blanco);
+}
 /* ========================= */
 /* Hero */
 .hero {
@@ -181,4 +285,14 @@ footer span {
   .acceso-reservas {
     padding: 1.2rem 0.5rem;
   }
-}
+/* INDEX */
+/* CONTACTO */
+  /* ========================= */
+  .form-contacto,
+  .info-contacto {
+    padding: 0.8rem 0.3rem;
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+  }
+  }
+  /* ========================= */
