@@ -1,16 +1,184 @@
+/* Reset*/
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 :root {
-    --blanco: #e7ecefff;
-    --azul-fuerte: #274c77ff;
-    --azul: #6096baff;
-    --celeste: #a3cef1ff;
-    --gris: #8b8c89ff;
+  --blanco: #e7ecefff;
+  --azul-fuerte: #274c77ff;
+  --azul: #6096baff;
+  --celeste: #a3cef1ff;
+  --gris: #8b8c89ff;
+  --sombra: 0 2px 8px rgba(39, 76, 119, 0.08);
+  --borde-radius: 12px;
+  --transicion: 0.2s;
+  --negro: #222;
+  --fuente: "Segoe UI", "Arial", sans-serif;
 }
-/* index */
 
-/* institucional */
+/* Tipografía base */
+body {
+  font-family: var(--fuente);
+  background: var(--blanco);
+  color: var(--negro);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+header {
+  background: var(--azul-fuerte);
+  box-shadow: var(--sombra);
+}
+
+.navbar {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1.5rem;
+  justify-content: space-between;
+}
+
+.navbar_logo img {
+  display: block;
+  border-radius: 50%;
+  background: var(--blanco);
+  padding: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.nav_menu {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav_menu a {
+  color: var(--blanco);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 0.3em 0.7em;
+  border-radius: var(--borde-radius);
+  transition: background var(--transicion), color var(--transicion);
+}
+
+.nav_menu a:hover,
+.nav_menu a:focus {
+  background: var(--celeste);
+  color: var(--azul-fuerte);
+}
+
+/* INDEX */
+/* ========================= */
+/* Hero */
+.hero {
+  background: linear-gradient(90deg, var(--azul) 60%, var(--celeste) 100%);
+  color: var(--blanco);
+  padding: 3rem 1.5rem 2rem 1.5rem;
+  text-align: center;
+  border-radius: 0 0 var(--borde-radius) var(--borde-radius);
+  box-shadow: var(--sombra);
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+}
+
+.hero h3 {
+  font-weight: 400;
+  font-size: 1.3rem;
+  color: var(--blanco);
+  opacity: 0.95;
+}
+
+/* Info clínica */
+.info-clinica {
+  max-width: 900px;
+  margin: 2.5rem auto 1.5rem auto;
+  background: var(--celeste);
+  padding: 2rem 1.5rem;
+  border-radius: var(--borde-radius);
+  box-shadow: var(--sombra);
+  text-align: center;
+}
+
+.info-clinica h2 {
+  color: var(--azul-fuerte);
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+/* Acceso reservas */
+.acceso-reservas {
+  max-width: 900px;
+  margin: 1.5rem auto 2.5rem auto;
+  background: var(--azul);
+  color: var(--blanco);
+  padding: 2rem 1.5rem;
+  border-radius: var(--borde-radius);
+  box-shadow: var(--sombra);
+  text-align: center;
+}
+
+.acceso-reservas h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+/* ========================= */
+
+/* Footer */
+footer {
+  background: var(--azul-fuerte);
+  color: var(--blanco);
+  padding: 1.2rem 0 0.7rem 0;
+  margin-top: auto;
+  text-align: center;
+}
+
+.footer_social {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 0.7rem;
+}
+
+.footer_social a {
+  color: var(--blanco);
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color var(--transicion);
+}
+
+.footer_social a:hover,
+.footer_social a:focus {
+  color: var(--celeste);
+}
+
+footer span {
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+/* Responsive uso de media queries */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 1rem 0.5rem;
+  }
+  .nav_menu {
+    gap: 1rem;
+  }
+  .hero,
+  .info-clinica,
+  .acceso-reservas {
+    padding: 1.2rem 0.5rem;
+  }
+}
