@@ -6,13 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Proyecto Final de Introducción Web, Tecnicatura Desarrollo Web UNER, Primera entrega Trabajo práctico integrador">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
     <title>Clínica IDW S.A</title>
 </head>
 
 <body>
     <header>
-        <nav>
+        <nav class="navbar" aria-label="Navegación principal">
+            <a href="Index.html" class="navbar_logo">
+                <img src="assets/logoIDW.png" alt="Logo Clínica IDW S.A" width="64" height="64">
+            </a>
             <ul class="nav_menu">
                 <li><a href="Index.html">Inicio</a></li>
                 <li><a href="institucional.html">Institucional</a></li>
@@ -21,24 +25,23 @@
         </nav>
     </header>
     <main>
-        <section class="encabezado">
-            <div class="banner">
-                <div class="enunciado">
-                    <h1>Clínica IDW S.A</h1>
-                    <h3>Tu salud, nuestra prioridad</h3>
-                </div>
-            </div>
+        <section class="hero">
+            <h1>Clínica IDW S.A</h1>
+            <h3>Tu salud, nuestra prioridad</h3>
         </section>
-        <section class="presentacion">
-            <article></article>
-            <article></article>
+        <section class="info-clinica">
+            <h2>Bienvenidos</h2>
+        </section>
+        <section class="acceso-reservas">
+            <!-- posiblemente una sección de reservas (?  -->
+            <h2>Reservá tu turno</h2>
         </section>
     </main>
     <footer>
         <ul class="footer_social">
-            <li><a href="">Linkedin</a></li>
-            <li><a href="">WhatsApp</a></li>
-            <li><a href="">Telefóno</a></li>
+            <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://wa.me/5490000000000" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+            <li><a href="tel:+540000000000">Teléfono</a></li>
         </ul>
         <span>Copyright ©2025 Clínica IDW S.A</span>
     </footer>
