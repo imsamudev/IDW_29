@@ -10,7 +10,10 @@
 
 <body>
     <header>
-        <nav>
+        <nav class="navbar" aria-label="Navegación principal">
+            <a href="Index.html" class="navbar_logo">
+                <img src="assets/logoIDW.png" alt="Logo Clínica IDW S.A" width="64" height="64">
+            </a>
             <ul class="nav_menu">
                 <li><a href="Index.html">Inicio</a></li>
                 <li><a href="institucional.html">Institucional</a></li>
@@ -18,28 +21,35 @@
             </ul>
         </nav>
     </header>
-    
 
-<section>
-<div>
-<h3>Formulario de contacto</h3>
-
-<form action="" method="POST">
-  <label for="nombreContacto">Nombre:</label><br>
-  <input type="text" id="nombreContacto" name="nombreContacto" value="Ingrese su nombre aqui"><br>
-  <label for="apellidoContacto">Apellido:</label><br>
-  <input type="text" id="apellidoContacto" name="apellidoContacto" value="Ingrese su apellido aqui"><br>
-  <label for="mensajeContacto">Mensaje:</label><br>
-  <textarea id="mensajeContacto" name="mensajeContacto" rows="5" required></textarea><br><br>
-  <input type="submit" value="Enviar">
-</form> 
-</div>
-</section>
+    <main>
+        <section class="form-contacto">
+            <h2>Formulario de contacto</h2>
+            <form action="" method="POST">
+                <label for="nombreContacto">Nombre y Apellido:</label>
+                <input type="text" id="nombreContacto" name="nombreContacto" placeholder="Ingrese su nombre y apellido"
+                    required>
+                <label for="emailContacto">Email:</label>
+                <input type="email" id="emailContacto" name="emailContacto" placeholder="ejemplo@correo.com" required>
+                <label for="mensajeContacto">Mensaje:</label>
+                <textarea id="mensajeContacto" name="mensajeContacto" rows="5" required></textarea>
+                <input type="submit" value="Enviar">
+            </form>
+        </section>
+        <section class="info-contacto">
+            <h2>Información de contacto</h2>
+            <ul>
+                <li>Dirección: Calle Zoom nro 1959, Ciudad De la Furia, Argentina.</li>
+                <li>Teléfono: <a href="tel:+540000000000">+54 000 000 0000</a></li>
+                <li>Email: <a href="mailto:info@clinicaidw.com">info@clinicaidw.com</a></li>
+            </ul>
+        </section>
+    </main>
     <footer>
         <ul class="footer_social">
-            <li><a href="">Linkedin</a></li>
-            <li><a href="">WhatsApp</a></li>
-            <li><a href="">Telefóno</a></li>
+            <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://wa.me/5490000000000" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+            <li><a href="tel:+540000000000">Teléfono</a></li>
         </ul>
         <span>Copyright ©2025 Clínica IDW S.A</span>
     </footer>
