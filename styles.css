@@ -294,5 +294,14 @@ footer span {
     margin-left: 0.3rem;
     margin-right: 0.3rem;
   }
+  /* INSTITUCIONAL */
+  /* ========================= */
+  .historia,
+  .mision-vision,
+  .equipo {
+    padding: 0.8rem 0.3rem;
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+  } 
   }
   /* ========================= */
