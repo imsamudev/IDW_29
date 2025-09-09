@@ -1,204 +1,79 @@
 /* Reset*/
 * {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 :root {
---blanco: #e7ecefff;
---azul-fuerte: #274c77ff;
---azul: #6096baff;
---celeste: #a3cef1ff;
---gris: #8b8c89ff;
---sombra: 0 2px 8px rgba(39, 76, 119, 0.08);
---borde-radius: 12px;
---transicion: 0.2s;
---negro: #222;
---fuente: "Segoe UI", "Arial", sans-serif;
+  --blanco: #e7ecefff;
+  --azul-fuerte: #274c77ff;
+  --azul: #6096baff;
+  --celeste: #a3cef1ff;
+  --gris: #8b8c89ff;
+  --sombra: 0 2px 8px rgba(39, 76, 119, 0.08);
+  --borde-radius: 12px;
+  --transicion: 0.2s;
+  --negro: #222;
+  --fuente: "Segoe UI", "Arial", sans-serif;
 }
 
 /* Tipografía base */
 body {
-font-family: var(--fuente);
-background: var(--blanco);
-color: var(--negro);
-min-height: 100vh;
-display: flex;
-flex-direction: column;
+  font-family: var(--fuente);
+  background: var(--blanco);
+  color: var(--negro);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Navbar */
 header {
-background: var(--azul-fuerte);
-box-shadow: var(--sombra);
+  background: var(--azul-fuerte);
+  box-shadow: var(--sombra);
 }
 
 .navbar {
-max-width: 1100px;
-margin: 0 auto;
-display: flex;
-align-items: center;
-padding: 0.5rem 1.5rem;
-justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1.5rem;
+  justify-content: space-between;
 }
 
 .navbar_logo img {
-display: block;
-border-radius: 50%;
-background: var(--blanco);
-padding: 4px;
-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  display: block;
+  border-radius: 50%;
+  background: var(--blanco);
+  padding: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .nav_menu {
-list-style: none;
-display: flex;
-gap: 2rem;
+  list-style: none;
+  display: flex;
+  gap: 2rem;
 }
 
 .nav_menu a {
-color: var(--blanco);
-text-decoration: none;
-font-weight: 500;
-font-size: 1.1rem;
-padding: 0.3em 0.7em;
-border-radius: var(--borde-radius);
-transition: background var(--transicion), color var(--transicion);
+  color: var(--blanco);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 0.3em 0.7em;
+  border-radius: var(--borde-radius);
+  transition: background var(--transicion), color var(--transicion);
 }
 
 .nav_menu a:hover,
 .nav_menu a:focus {
-background: var(--celeste);
-color: var(--azul-fuerte);
+  background: var(--celeste);
+  color: var(--azul-fuerte);
 }
 
 /* INDEX */
-/* CONTACTO */
-/* ========================= */
-/* INSTITUCIONAL */
-/* ========================= */
-.historia,
-.mision-vision,
-.equipo {
-  max-width: 700px;
-  margin: 1.5rem auto 1rem auto;
-  padding: 1.2rem 1rem;
-  border-radius: var(--borde-radius);
-  box-shadow: var(--sombra);
-  background: var(--celeste);
-  text-align: center;
-}
-
-.historia h2,
-.mision-vision h2,
-.equipo h2 {
-  color: var(--azul-fuerte);
-  margin-bottom: 0.7rem;
-  font-size: 1.35rem;
-}
-.form-contacto,
-.info-contacto {
-max-width: 500px;
-margin: 1.5rem auto 1rem auto;
-padding: 1.2rem 1rem;
-border-radius: var(--borde-radius);
-box-shadow: var(--sombra);
-}
-
-.form-contacto {
-background: var(--celeste);
-}
-
-.form-contacto h2,
-.info-contacto h2 {
-color: var(--azul-fuerte);
-margin-bottom: 0.7rem;
-font-size: 1.25rem;
-text-align: center;
-}
-
-.form-contacto form {
-display: flex;
-flex-direction: column;
-gap: 0.7rem;
-}
-
-.form-contacto label {
-font-weight: 500;
-color: var(--azul-fuerte);
-margin-bottom: 0.1rem;
-font-size: 1rem;
-}
-
-.form-contacto input[type="text"],
-.form-contacto input[type="email"],
-.form-contacto textarea {
-  padding: 0.45em 0.8em;
-  border: 1px solid var(--azul);
-  border-radius: var(--borde-radius);
-  font-size: 0.98rem;
-  background: var(--blanco);
-  color: var(--negro);
-  transition: border var(--transicion);
-  resize: vertical;
-}
-
-.form-contacto input[type="text"]:focus,
-.form-contacto input[type="email"]:focus,
-.form-contacto textarea:focus {
-  border: 1.5px solid var(--azul-fuerte);
-  outline: none;
-}
-
-.form-contacto input[type="submit"] {
-  background: var(--azul-fuerte);
-  color: var(--blanco);
-  border: none;
-  border-radius: var(--borde-radius);
-  padding: 0.5em 1em;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background var(--transicion);
-  margin-top: 0.3rem;
-}
-
-.form-contacto input[type="submit"]:hover,
-.form-contacto input[type="submit"]:focus {
-  background: var(--azul);
-}
-
-.info-contacto {
-  background: var(--azul);
-  color: var(--blanco);
-}
-
-.info-contacto h2 {
-  color: var(--blanco);
-}
-
-.info-contacto ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.info-contacto li {
-  margin-bottom: 0.5rem;
-  font-size: 0.98rem;
-}
-
-.info-contacto a {
-  color: var(--celeste);
-  text-decoration: underline;
-  transition: color var(--transicion);
-}
-
-.info-contacto a:hover,
-.info-contacto a:focus {
-  color: var(--blanco);
-}
 /* ========================= */
 /* Hero */
 .hero {
@@ -291,6 +166,134 @@ footer span {
   font-size: 0.95rem;
   opacity: 0.8;
 }
+
+/* CONTACTO */
+/* ========================= */
+.form-contacto,
+.info-contacto {
+  max-width: 500px;
+  margin: 1.5rem auto 1rem auto;
+  padding: 1.2rem 1rem;
+  border-radius: var(--borde-radius);
+  box-shadow: var(--sombra);
+}
+
+.form-contacto {
+  background: var(--celeste);
+}
+
+.form-contacto h2,
+.info-contacto h2 {
+  color: var(--azul-fuerte);
+  margin-bottom: 0.7rem;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.form-contacto form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.form-contacto label {
+  font-weight: 500;
+  color: var(--azul-fuerte);
+  margin-bottom: 0.1rem;
+  font-size: 1rem;
+}
+
+.form-contacto input[type="text"],
+.form-contacto input[type="email"],
+.form-contacto textarea {
+  padding: 0.45em 0.8em;
+  border: 1px solid var(--azul);
+  border-radius: var(--borde-radius);
+  font-size: 0.98rem;
+  background: var(--blanco);
+  color: var(--negro);
+  transition: border var(--transicion);
+  resize: vertical;
+}
+
+.form-contacto input[type="text"]:focus,
+.form-contacto input[type="email"]:focus,
+.form-contacto textarea:focus {
+  border: 1.5px solid var(--azul-fuerte);
+  outline: none;
+}
+
+.form-contacto input[type="submit"] {
+  background: var(--azul-fuerte);
+  color: var(--blanco);
+  border: none;
+  border-radius: var(--borde-radius);
+  padding: 0.5em 1em;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transicion);
+  margin-top: 0.3rem;
+}
+
+.form-contacto input[type="submit"]:hover,
+.form-contacto input[type="submit"]:focus {
+  background: var(--azul);
+}
+
+.info-contacto {
+  background: var(--azul);
+  color: var(--blanco);
+}
+
+.info-contacto h2 {
+  color: var(--blanco);
+}
+
+.info-contacto ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-contacto li {
+  margin-bottom: 0.5rem;
+  font-size: 0.98rem;
+}
+
+.info-contacto a {
+  color: var(--celeste);
+  text-decoration: underline;
+  transition: color var(--transicion);
+}
+
+.info-contacto a:hover,
+.info-contacto a:focus {
+  color: var(--blanco);
+}
+
+/* INSTITUCIONAL */
+/* ========================= */
+.historia,
+.mision-vision,
+.equipo {
+  max-width: 700px;
+  margin: 1.5rem auto 1rem auto;
+  padding: 1.2rem 1rem;
+  border-radius: var(--borde-radius);
+  box-shadow: var(--sombra);
+  background: var(--celeste);
+  text-align: center;
+}
+
+.historia h2,
+.mision-vision h2,
+.equipo h2 {
+  color: var(--azul-fuerte);
+  margin-bottom: 0.7rem;
+  font-size: 1.35rem;
+}
+
 /* Responsive uso de media queries */
 @media (max-width: 768px) {
   .navbar {
@@ -306,8 +309,7 @@ footer span {
   .acceso-reservas {
     padding: 1.2rem 0.5rem;
   }
-/* INDEX */
-/* CONTACTO */
+  /* CONTACTO */
   /* ========================= */
   .form-contacto,
   .info-contacto {
@@ -321,8 +323,7 @@ footer span {
   .mision-vision,
   .equipo {
     padding: 0.8rem 0.3rem;
-    margin-left: 0.3rem;git add styl
+    margin-left: 0.3rem;
     margin-right: 0.3rem;
-  } 
   }
-  /* ========================= */
+}
