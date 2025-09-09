@@ -74,6 +74,99 @@ header {
 }
 
 /* INDEX */
+/* ========================= */
+/* Hero */
+.hero {
+  background: linear-gradient(90deg, var(--azul) 60%, var(--celeste) 100%);
+  color: var(--blanco);
+  padding: 3rem 1.5rem 2rem 1.5rem;
+  text-align: center;
+  border-radius: 0 0 var(--borde-radius) var(--borde-radius);
+  box-shadow: var(--sombra);
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+}
+
+.hero h3 {
+  font-weight: 400;
+  font-size: 1.3rem;
+  color: var(--blanco);
+  opacity: 0.95;
+}
+
+/* Info clínica */
+.info-clinica {
+  max-width: 900px;
+  margin: 2.5rem auto 1.5rem auto;
+  background: var(--celeste);
+  padding: 2rem 1.5rem;
+  border-radius: var(--borde-radius);
+  box-shadow: var(--sombra);
+  text-align: center;
+}
+
+.info-clinica h2 {
+  color: var(--azul-fuerte);
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+/* Acceso reservas */
+.acceso-reservas {
+  max-width: 900px;
+  margin: 1.5rem auto 2.5rem auto;
+  background: var(--azul);
+  color: var(--blanco);
+  padding: 2rem 1.5rem;
+  border-radius: var(--borde-radius);
+  box-shadow: var(--sombra);
+  text-align: center;
+}
+
+.acceso-reservas h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+/* ========================= */
+
+/* Footer */
+footer {
+  background: var(--azul-fuerte);
+  color: var(--blanco);
+  padding: 1.2rem 0 0.7rem 0;
+  margin-top: auto;
+  text-align: center;
+}
+
+.footer_social {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 0.7rem;
+}
+
+.footer_social a {
+  color: var(--blanco);
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color var(--transicion);
+}
+
+.footer_social a:hover,
+.footer_social a:focus {
+  color: var(--celeste);
+}
+
+footer span {
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
 /* CONTACTO */
 /* ========================= */
 .form-contacto,
@@ -178,98 +271,29 @@ header {
 .info-contacto a:focus {
   color: var(--blanco);
 }
+
+/* INSTITUCIONAL */
 /* ========================= */
-/* Hero */
-.hero {
-  background: linear-gradient(90deg, var(--azul) 60%, var(--celeste) 100%);
-  color: var(--blanco);
-  padding: 3rem 1.5rem 2rem 1.5rem;
-  text-align: center;
-  border-radius: 0 0 var(--borde-radius) var(--borde-radius);
+.historia,
+.mision-vision,
+.equipo {
+  max-width: 700px;
+  margin: 1.5rem auto 1rem auto;
+  padding: 1.2rem 1rem;
+  border-radius: var(--borde-radius);
   box-shadow: var(--sombra);
-}
-
-.hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-  letter-spacing: 1px;
-}
-
-.hero h3 {
-  font-weight: 400;
-  font-size: 1.3rem;
-  color: var(--blanco);
-  opacity: 0.95;
-}
-
-/* Info clínica */
-.info-clinica {
-  max-width: 900px;
-  margin: 2.5rem auto 1.5rem auto;
   background: var(--celeste);
-  padding: 2rem 1.5rem;
-  border-radius: var(--borde-radius);
-  box-shadow: var(--sombra);
   text-align: center;
 }
 
-.info-clinica h2 {
+.historia h2,
+.mision-vision h2,
+.equipo h2 {
   color: var(--azul-fuerte);
-  margin-bottom: 0.5rem;
-  font-size: 1.5rem;
-}
-
-/* Acceso reservas */
-.acceso-reservas {
-  max-width: 900px;
-  margin: 1.5rem auto 2.5rem auto;
-  background: var(--azul);
-  color: var(--blanco);
-  padding: 2rem 1.5rem;
-  border-radius: var(--borde-radius);
-  box-shadow: var(--sombra);
-  text-align: center;
-}
-
-.acceso-reservas h2 {
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
-}
-/* ========================= */
-
-/* Footer */
-footer {
-  background: var(--azul-fuerte);
-  color: var(--blanco);
-  padding: 1.2rem 0 0.7rem 0;
-  margin-top: auto;
-  text-align: center;
-}
-
-.footer_social {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
   margin-bottom: 0.7rem;
+  font-size: 1.35rem;
 }
 
-.footer_social a {
-  color: var(--blanco);
-  text-decoration: none;
-  font-size: 1.1rem;
-  transition: color var(--transicion);
-}
-
-.footer_social a:hover,
-.footer_social a:focus {
-  color: var(--celeste);
-}
-
-footer span {
-  font-size: 0.95rem;
-  opacity: 0.8;
-}
 /* Responsive uso de media queries */
 @media (max-width: 768px) {
   .navbar {
@@ -285,8 +309,7 @@ footer span {
   .acceso-reservas {
     padding: 1.2rem 0.5rem;
   }
-/* INDEX */
-/* CONTACTO */
+  /* CONTACTO */
   /* ========================= */
   .form-contacto,
   .info-contacto {
@@ -300,8 +323,7 @@ footer span {
   .mision-vision,
   .equipo {
     padding: 0.8rem 0.3rem;
-    margin-left: 0.3rem;git add styl
+    margin-left: 0.3rem;
     margin-right: 0.3rem;
-  } 
   }
-  /* ========================= */
+}
