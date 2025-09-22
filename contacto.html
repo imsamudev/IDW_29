@@ -4,8 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Sección Contacto, Clínica IDW, Tecnicatura Desarrollo Web UNER, Primera entrega Trabajo práctico integrador">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <title>Clínica IDW S.A</title>
+    <title>Contacto Clínica IDW S.A</title>
 </head>
 
 <body>
@@ -23,21 +27,23 @@
     </header>
 
     <main>
-        <section class="form-contacto">
-            <h2>Formulario de contacto</h2>
+        <section class="form-contacto container my-4 py-4">
+            <h2 class="mb-3">Formulario de contacto</h2>
             <form action="" method="POST">
-                <label for="nombreContacto">Nombre y Apellido:</label>
-                <input type="text" id="nombreContacto" name="nombreContacto" placeholder="Ingrese su nombre y apellido"
-                    required>
-                <label for="emailContacto">Email:</label>
-                <input type="email" id="emailContacto" name="emailContacto" placeholder="ejemplo@correo.com" required>
-                <label for="mensajeContacto">Mensaje:</label>
-                <textarea id="mensajeContacto" name="mensajeContacto" rows="5" required></textarea>
-                <input type="submit" value="Enviar">
+                <label for="nombreContacto" class="form-label">Nombre y Apellido:</label>
+                <input type="text" id="nombreContacto" name="nombreContacto" class="form-control mb-3"
+                    placeholder="Ingrese su nombre y apellido" required>
+                <label for="emailContacto" class="form-label">Email:</label>
+                <input type="email" id="emailContacto" name="emailContacto" class="form-control mb-3"
+                    placeholder="ejemplo@correo.com" required>
+                <label for="mensajeContacto" class="form-label">Mensaje:</label>
+                <textarea id="mensajeContacto" name="mensajeContacto" class="form-control mb-3" rows="5"
+                    required></textarea>
+                <input type="submit" value="Enviar" class="btn btn-primary mt-2">
             </form>
         </section>
-        <section class="info-contacto">
-            <h2>Información de contacto</h2>
+        <section class="info-contacto container my-4 py-4">
+            <h2 class="mb-3">Información de contacto</h2>
             <ul>
                 <li>Dirección: Calle Zoom nro 1959, Ciudad De la Furia, Argentina.</li>
                 <li>Teléfono: <a href="tel:+540000000000">+54 000 000 0000</a></li>
@@ -45,8 +51,8 @@
             </ul>
         </section>
     </main>
-    <footer>
-        <ul class="footer_social">
+    <footer class="mt-auto py-3">
+        <ul class="footer_social d-flex justify-content-center gap-4 mb-2">
             <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
             <li><a href="https://wa.me/5490000000000" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
             <li><a href="tel:+540000000000">Teléfono</a></li>
