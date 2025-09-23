@@ -10,11 +10,11 @@
   --azul-fuerte: #274c77ff;
   --azul: #6096baff;
   --celeste: #a3cef1ff;
-  --gris: #8b8c89ff;
+  --gris: rgb(182, 182, 182);
   --sombra: 0 2px 8px rgba(39, 76, 119, 0.08);
   --borde-radius: 12px;
   --transicion: 0.2s;
-  --negro: #222;
+  --negro: #232323;
   --fuente: "Segoe UI", "Arial", sans-serif;
 }
 
