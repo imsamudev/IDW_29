@@ -322,6 +322,16 @@ footer span {
   background: var(--celeste);
   text-align: center;
 }
+.card-img-top {
+    max-height: 300px;
+    object-fit: cover;
+    width: 100%
+}
+.card-img-top.square {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
 
 .historia h2,
 .mision-vision h2,
