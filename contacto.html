@@ -12,7 +12,7 @@
     <title>Contacto Clínica IDW S.A</title>
 </head>
 
-<body>
+<body data-bs-theme="light">
     <header>
         <nav class="navbar" aria-label="Navegación principal">
             <a href="Index.html" class="navbar_logo">
@@ -23,6 +23,10 @@
                 <li><a href="institucional.html">Institucional</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
             </ul>
+            <div class="form-check form-switch ms-3">
+                <input class="form-check-input" type="checkbox" role="switch" id="darkModeToggle">
+                <label class="form-check-label" for="darkModeToggle"></label>
+            </div>
         </nav>
     </header>
 
@@ -59,6 +63,20 @@
         </ul>
         <span>Copyright ©2025 Clínica IDW S.A</span>
     </footer>
+    <script>
+        const toggle = document.getElementById("darkModeToggle");
+         const html = document.documentElement;
+
+         const savedTheme = localStorage.getItem("theme") || "light";
+         html.setAttribute("data-bs-theme", savedTheme);
+         toggle.checked = savedTheme === "dark";
+
+         toggle.addEventListener("change", () =>{
+            const theme = toggle.checked ? "dark" : "light";
+            html.setAttribute("data-bs-theme", theme);
+            localStorage.setItem("theme", theme);
+         });
+    </script>
 </body>
 
 </html>
