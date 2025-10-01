@@ -14,25 +14,32 @@
 
 <body data-bs-theme="light">
     <header>
-        <nav class="navbar" aria-label="Navegación principal">
+        <nav class="navbar navbar-expand-md" aria-label="Navegación principal">
             <a href="Index.html" class="navbar_logo">
                 <img src="assets/logoIDW.png" alt="Logo Clínica IDW S.A" width="64" height="64">
             </a>
-            <ul class="nav_menu">
-                <li><a href="Index.html">Inicio</a></li>
-                <li><a href="institucional.html">Institucional</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-            </ul>
-            <div class="form-check form-switch ms-3">
-                <input class="form-check-input" type="checkbox" role="switch" id="darkModeToggle">
-                <label class="form-check-label" for="darkModeToggle"></label>
+            <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarIDW"
+                aria-controls="navbarIDW" aria-expanded="false" aria-label="Abrir menú">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center justify-content-md-end" id="navbarIDW">
+                <ul class="nav_menu navbar-nav mb-2 mb-md-0 text-center">
+                    <li class="nav-item"><a class="nav-link" href="Index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="institucional.html">Institucional</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+                </ul>
+                <div class="form-check form-switch mt-4 mb-4 mt-md-0 mb-md-0 ms-md-3 d-flex justify-content-center">
+                    <input class="form-check-input" type="checkbox" role="switch" id="darkModeToggle">
+                    <label class="form-check-label" for="darkModeToggle"></label>
+                </div>
             </div>
         </nav>
     </header>
+
     <main>
-        <section class="hero">
-            <div class="hero-content">
-                <img src="assets/logoIDW.png" alt="Logo Clínica IDW S.A" class="hero-logo mb-3">
+        <section class="hero d-flex align-items-center justify-content-center justify-content-md-end">
+            <div class="hero-content text-end">
+                <img src="assets/logoIDW.png" alt="Logo Clínica IDW S.A" class="hero-logo mb-3 mx-auto">
                 <h1 class="display-4">Clínica IDW S.A</h1>
                 <h3 class="lead">Tu salud, nuestra prioridad</h3>
                 <p class="mt-4 fs-5">
@@ -42,28 +49,32 @@
                 </p>
             </div>
         </section>
-        <section class="info-clinica container my-4 py-4">
-            <h2 class="mb-3">Bienvenidos</h2>
-            <p>
-                En Clínica IDW S.A, nos esforzamos por ofrecer un ambiente cálido y seguro para toda la familia.<br>
-                Contamos con más de 20 años de experiencia en el cuidado de la salud, abarcando diversas especialidades
-                médicas y servicios de diagnóstico.<br>
-                Nuestro compromiso es acompañarte en cada etapa de tu vida, brindando atención personalizada y humana.
-            </p>
-            <ul class="list-inline-item mt-3 text-start">
-                <li>Consultorios modernos y confortables</li>
-                <li>Laboratorio propio</li>
-                <li>Emergencias 24 horas</li>
-                <li>Atención por obras sociales y particulares</li>
-            </ul>
-        </section>
-        <section class="acceso-reservas container my-4 py-4">
-            <h2 class="mb-3">Reservá tu turno</h2>
-            <p>
-                Podés solicitar tu turno de manera rápida y sencilla.<br>
-                Elegí la especialidad, el profesional y el horario que más te convenga.
-            </p>
-            <a href="contacto.html" class="btn btn-light mt-3 fw-bold">Solicitar turno</a>
+        <section class="container my-4 py-4 px-3 ">
+            <section class="info-clinica">
+                <h2 class="mb-3">Bienvenidos</h2>
+                <p>
+                    En Clínica IDW S.A, nos esforzamos por ofrecer un ambiente cálido y seguro para toda la familia.<br>
+                    Contamos con más de 20 años de experiencia en el cuidado de la salud, abarcando diversas
+                    especialidades
+                    médicas y servicios de diagnóstico.<br>
+                    Nuestro compromiso es acompañarte en cada etapa de tu vida, brindando atención personalizada y
+                    humana.
+                </p>
+                <ul class="list-inline-item mt-3 text-start">
+                    <li>Consultorios modernos y confortables</li>
+                    <li>Laboratorio propio</li>
+                    <li>Emergencias 24 horas</li>
+                    <li>Atención por obras sociales y particulares</li>
+                </ul>
+            </section>
+            <section class="acceso-reservas">
+                <h2 class="mb-3">Reservá tu turno</h2>
+                <p>
+                    Podés solicitar tu turno de manera rápida y sencilla.<br>
+                    Elegí la especialidad, el profesional y el horario que más te convenga.
+                </p>
+                <a href="contacto.html" class="btn btn-light mt-3 fw-bold">Solicitar turno</a>
+            </section>
         </section>
     </main>
     <footer class="mt-auto py-3">
@@ -75,6 +86,7 @@
         <span>Copyright ©2025 Clínica IDW S.A</span>
     </footer>
     <script src="scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

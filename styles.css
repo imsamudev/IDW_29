@@ -1,8 +1,54 @@
 /* Reset*/
-* {
+html,
+body {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: inherit;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul,
+ol {
+  padding-left: 0;
+  list-style-position: inside;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 :root {
@@ -32,6 +78,13 @@ body {
 header {
   background: var(--azul-fuerte);
   box-shadow: var(--sombra);
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+[data-bs-theme="dark"] .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(200,200,200,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
 .navbar {
@@ -78,25 +131,21 @@ header {
 /* Hero */
 .hero {
   background: url("assets/background1.png") center center/cover no-repeat;
-  color: var(--blanco);
+  color: var(--negro);
   min-height: 340px;
-  max-height: 480px;
-  border-radius: 0 0 var(--borde-radius) var(--borde-radius);
   box-shadow: var(--sombra);
   position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 3rem 2.5rem 2rem 2.5rem;
-  overflow: hidden;
+  padding: 1rem;
 }
 
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.32);
-  border-radius: 0 0 var(--borde-radius) var(--borde-radius);
+  background: rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -110,6 +159,8 @@ header {
   max-width: 480px;
   width: 100%;
   margin-right: 2vw;
+  /* Fondo semi-transparente */
+  background: none;
 }
 
 .hero-logo {
@@ -364,6 +415,7 @@ footer span {
 /* Cambiar tamaño del switch */
 .form-check-input {
   height: 1em;
+  cursor: pointer;
 }
 
 /* ========== TEXTO LEGIBLE EN MODO OSCURO ========== */
@@ -441,63 +493,14 @@ footer span {
 [data-bs-theme="dark"] .form-contacto label {
   color: #e7ecefff !important;
 }
-
-/* Responsive uso de media queries */
 @media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    gap: 0.7rem;
-    padding: 1rem 0.5rem;
-  }
-  .nav_menu {
-    gap: 1rem;
-  }
-  .hero,
-  .info-clinica,
-  .acceso-reservas {
-    padding: 1.2rem 0.5rem;
-  }
   .hero {
-    min-height: 220px;
-    max-height: none;
-    justify-content: center;
+    background-position: 10% center;
   }
   .hero-content {
-    align-items: center;
-    text-align: center;
-    margin-right: 0;
-    max-width: 98vw;
-  }
-  .hero-logo {
-    width: 54px;
-    height: 54px;
-    margin-bottom: 0.7rem;
-  }
-  .hero h1 {
-    font-size: 2.1rem;
-  }
-  .hero h3 {
-    font-size: 1.1rem;
-  }
-  .hero p,
-  .hero .fs-5 {
-    font-size: 1rem;
-  }
-  /* CONTACTO */
-  /* ========================= */
-  .form-contacto,
-  .info-contacto {
-    padding: 0.8rem 0.3rem;
-    margin-left: 0.3rem;
-    margin-right: 0.3rem;
-  }
-  /* INSTITUCIONAL */
-  /* ========================= */
-  .historia,
-  .mision-vision,
-  .equipo {
-    padding: 0.8rem 0.3rem;
-    margin-left: 0.3rem;
-    margin-right: 0.3rem;
+    color: var(--blanco);
+    background: rgba(0, 0, 0, 0.4);
+    padding: 1.2rem;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
   }
 }

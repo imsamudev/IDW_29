@@ -13,23 +13,29 @@
 
 <body data-bs-theme="light">
     <header>
-        <nav class="navbar" aria-label="Navegación principal">
+        <nav class="navbar navbar-expand-md" aria-label="Navegación principal">
             <a href="Index.html" class="navbar_logo">
                 <img src="assets/logoIDW.png" alt="Logo Clínica IDW S.A" width="64" height="64">
             </a>
-            <ul class="nav_menu">
-                <li><a href="Index.html">Inicio</a></li>
-                <li><a href="institucional.html">Institucional</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-            </ul>
-            <div class="form-check form-switch ms-3">
-                <input class="form-check-input" type="checkbox" role="switch" id="darkModeToggle">
-                <label class="form-check-label" for="darkModeToggle"></label>
+            <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarIDW"
+                aria-controls="navbarIDW" aria-expanded="false" aria-label="Abrir menú">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center justify-content-md-end" id="navbarIDW">
+                <ul class="nav_menu navbar-nav mb-2 mb-md-0 text-center">
+                    <li class="nav-item"><a class="nav-link" href="Index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="institucional.html">Institucional</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+                </ul>
+                <div class="form-check form-switch mt-4 mb-4 mt-md-0 mb-md-0 ms-md-3 d-flex justify-content-center">
+                    <input class="form-check-input" type="checkbox" role="switch" id="darkModeToggle">
+                    <label class="form-check-label" for="darkModeToggle"></label>
+                </div>
             </div>
         </nav>
     </header>
-    <main>
-        <section class="historia container my-4 py-4">
+    <main class="container my-4 py-4 px-3">
+        <section class="historia">
             <h2 class="mb-3">Nuestra Historia</h2>
             <p>
                 Clínica IDW S.A abrió sus puertas en 2003 con el propósito de ofrecer atención médica de calidad y
@@ -41,7 +47,7 @@
                 eligen día a día.
             </p>
         </section>
-        <section class="mision-vision container my-4 py-4">
+        <section class="mision-vision">
             <h2 class="mb-3">Misión y Visión</h2>
             <p>
                 Nuestra misión es brindar atención médica integral, personalizada y de excelencia, promoviendo la
@@ -56,8 +62,8 @@
                 <li>Innovación y mejora continua</li>
             </ul>
         </section>
-        <section class="mb-5 equipo container my-4 py-4">
-            <section class="mb-5 equipo container my-4 py-4">
+        <section>
+            <section class="mb-5 equipo">
                 <h2 class="mb-3">Nuestro Equipo</h2>
 
                 <div class="row g-4 mb-4 justify-content-center">
@@ -194,6 +200,7 @@
         <span>Copyright ©2025 Clínica IDW S.A</span>
     </footer>
     <script src="scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
