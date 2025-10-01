@@ -170,7 +170,7 @@ header {
   margin-bottom: 0.5rem;
 }
 .acceso-reservas p {
-  color: var(--blanco); 
+  color: var(--blanco);
 }
 
 /* ========================= */
@@ -328,14 +328,14 @@ footer span {
   text-align: center;
 }
 .card-img-top {
-    max-height: 300px;
-    object-fit: cover;
-    width: 100%
+  max-height: 300px;
+  object-fit: cover;
+  width: 100%;
 }
 .card-img-top.square {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
 }
 
 .historia h2,
@@ -348,8 +348,22 @@ footer span {
 
 /* ========== MODO OSCURO ========== */
 [data-bs-theme="dark"] {
-  --blanco: #383838;  
-  --negro:  #e7ecefff;    
+  --blanco: #383838;
+  --negro: #e7ecefff;
+}
+
+[data-bs-theme="dark"] .form-check-input {
+  background-color: #232323;
+  border-color: #e7ecefff;
+}
+[data-bs-theme="dark"] .form-check-input:checked {
+  background-color: var(--azul);
+  border-color: var(--celeste);
+}
+
+/* Cambiar tamaño del switch */
+.form-check-input {
+  height: 1em;
 }
 
 /* ========== TEXTO LEGIBLE EN MODO OSCURO ========== */
@@ -375,19 +389,14 @@ footer span {
 [data-bs-theme="dark"] .form-contacto input[type="text"],
 [data-bs-theme="dark"] .form-contacto input[type="email"],
 [data-bs-theme="dark"] .form-contacto textarea {
-  background: #333 !important; 
-  color: #e7ecefff !important;    
-  border-color: #555 !important; 
+  background: #333 !important;
+  color: #e7ecefff !important;
+  border-color: #555 !important;
 }
 
 [data-bs-theme="dark"] .form-contacto input::placeholder,
 [data-bs-theme="dark"] .form-contacto textarea::placeholder {
-  color: #e7ecefff !important; 
-}
-
-/* Botón en modo oscuro */
-[data-bs-theme="dark"] .btn-light {
-  color: #222 !important;
+  color: #e7ecefff !important;
 }
 
 /* ========== TEXTO FUERTE Y LEGIBLE EN SECCIONES CELESTES (MODO OSCURO) ========== */
@@ -400,24 +409,18 @@ footer span {
 /* Texto en hero, acceso-reservas, info-contacto sigue siendo claro */
 [data-bs-theme="dark"] .hero,
 [data-bs-theme="dark"] .acceso-reservas,
-[data-bs-theme="dark"] .info-contacto {
+[data-bs-theme="dark"] .info-contacto h2 {
   color: #e7ecefff !important;
 }
 
-/* Títulos azules, en modo claro y oscuro */
-.info-clinica h2,
-.historia h2,
-.mision-vision h2,
-.equipo h2 {
-  color: #274c77 !important; 
-}
 [data-bs-theme="dark"] .info-clinica h2,
 [data-bs-theme="dark"] .historia h2,
 [data-bs-theme="dark"] .mision-vision h2,
 [data-bs-theme="dark"] .equipo h2,
 [data-bs-theme="dark"] .form-contacto h2,
-[data-bs-theme="dark"] .acceso-reservas h2 {
-  color:  #e7ecefff !important;
+[data-bs-theme="dark"] .acceso-reservas h2,
+[data-bs-theme="dark"] .form-contacto input[type="submit"] {
+  color: #e7ecefff !important;
 }
 
 /* ========== FONDOS CLAROS MÁS APAGADOS EN MODO OSCURO ========== */
@@ -426,12 +429,12 @@ footer span {
 [data-bs-theme="dark"] .mision-vision,
 [data-bs-theme="dark"] .equipo,
 [data-bs-theme="dark"] .form-contacto {
-  background: #5a7ba8 !important; 
+  background: #3d5f8a !important;
 }
 
 [data-bs-theme="dark"] .acceso-reservas,
 [data-bs-theme="dark"] .info-contacto {
-  background: #3d5f8a !important; 
+  background: #4e79b1 !important;
 }
 
 /* Etiquetas del formulario en blanco en modo oscuro */
