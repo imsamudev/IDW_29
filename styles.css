@@ -126,6 +126,24 @@ header {
   color: var(--azul-fuerte);
 }
 
+.admin-login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.admin-login-icon {
+  filter: brightness(0) invert(1);
+  width: 24px;
+  height: 24px;
+  transition: filter var(--transicion);
+}
+
 /* INDEX */
 /* ========================= */
 /* Hero */
@@ -216,7 +234,6 @@ header {
 }
 
 .acceso-reservas h2 {
-  color: var(--azul-fuerte);
   font-size: 1.3rem;
   margin-bottom: 0.5rem;
 }
