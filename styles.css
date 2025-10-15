@@ -143,6 +143,25 @@ header {
   height: 24px;
   transition: filter var(--transicion);
 }
+/* icono ojo duplicado */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-textfield-decoration-container {
+  display: none !important;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+#togglePasswordIcon {
+  pointer-events: none;
+  font-size: 1.1rem;
+}
+
+#togglePassword {
+  background-color: transparent;
+  border-left: none;
+}
 
 /* INDEX */
 /* ========================= */
@@ -456,6 +475,7 @@ footer span {
 }
 /* ========== CAMPOS DE FORMULARIO EN MODO OSCURO ========== */
 [data-bs-theme="dark"] .form-contacto input[type="text"],
+[data-bs-theme="dark"] .form-contacto input[type="password"],
 [data-bs-theme="dark"] .form-contacto input[type="email"],
 [data-bs-theme="dark"] .form-contacto textarea {
   background: #333 !important;
