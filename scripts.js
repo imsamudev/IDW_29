@@ -50,7 +50,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  if (window.location.pathname.endsWith("admin.html")) {
+  if (window.location.pathname.includes("admin.html")) {
+    if (!localStorage.getItem("isAdminLogged")) {
+      window.location.href = "login.html";
+      return;
+    }
     const logoutBtn = document.getElementById("logoutBtn");
     if (logoutBtn) {
       logoutBtn.addEventListener("click", () => {
