@@ -50,6 +50,22 @@ export const ESPECIALIDADES_INICIALES = [
   { id: 2, nombre: "Pediatría" },
   { id: 3, nombre: "Cardiología" },
   { id: 4, nombre: "Dermatología" },
+  { id: 5, nombre: "Neurología" },
+  { id: 6, nombre: "Ginecología" },
+  { id: 7, nombre: "Traumatología" },
+  { id: 8, nombre: "Oftalmología" },
+  { id: 9, nombre: "Otorrinolaringología" },
+  { id: 10, nombre: "Endocrinología" },
+  { id: 11, nombre: "Urología" },
+  { id: 12, nombre: "Oncología" },
+  { id: 13, nombre: "Reumatología" },
+  { id: 14, nombre: "Gastroenterología" },
+  { id: 15, nombre: "Nefrología" },
+  { id: 16, nombre: "Psiquiatría" },
+  { id: 17, nombre: "Neumonología" },
+  { id: 18, nombre: "Cirugía General" },
+  { id: 19, nombre: "Alergología" },
+  { id: 20, nombre: "Infectología" },
 ];
 
 export const OBRAS_SOCIALES_INICIALES = [
