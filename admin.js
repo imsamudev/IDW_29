@@ -11,18 +11,23 @@ inicializarObrasSociales();
 function obtenerMedicos() {
   return JSON.parse(localStorage.getItem("medicos")) || [];
 }
-
 function guardarMedicos(medicos) {
   localStorage.setItem("medicos", JSON.stringify(medicos));
 }
-
 function obtenerEspecialidades() {
   return JSON.parse(localStorage.getItem("especialidades")) || [];
 }
-
+function guardarEspecialidades(especialidades) {
+  localStorage.setItem("especialidades", JSON.stringify(especialidades));
+}
 function obtenerObrasSociales() {
   return JSON.parse(localStorage.getItem("obrasSociales")) || [];
 }
+function guardarObrasSociales(obrasSociales) {
+  localStorage.setItem("obrasSociales", JSON.stringify(obrasSociales));
+}
+
+// CRUD MÉDICOS
 
 function renderizarTablaMedicos() {
   const tbody = document.querySelector("#tablaMedicos tbody");
@@ -107,31 +112,6 @@ function aplicarTemaCards() {
     }
   });
 }
-
-const observer = new MutationObserver(() => {
-  aplicarTemaCards();
-  renderizarTablaMedicos();
-
-  const modalContent = document.getElementById("verMedicoModalContent");
-  if (modalContent) {
-    const theme = document.documentElement.getAttribute("data-bs-theme");
-    modalContent.classList.remove(
-      "bg-light",
-      "bg-dark",
-      "text-light",
-      "text-dark"
-    );
-    if (theme === "dark") {
-      modalContent.classList.add("bg-dark", "text-light");
-    } else {
-      modalContent.classList.add("bg-light", "text-dark");
-    }
-  }
-});
-observer.observe(document.documentElement, {
-  attributes: true,
-  attributeFilter: ["data-bs-theme"],
-});
 
 function renderizarOpcionesEspecialidad() {
   const select = document.getElementById("especialidadMedico");
@@ -366,10 +346,340 @@ function mostrarMensajeMedico(mensaje, tipo = "info") {
   setTimeout(() => div.classList.add("d-none"), 2500);
 }
 
+// CRUD ESPECIALIDADES
+
+function renderizarTablaEspecialidades() {
+  const tbody = document.querySelector("#tablaEspecialidades tbody");
+  const tabla = document.getElementById("tablaEspecialidades");
+  const especialidades = obtenerEspecialidades();
+
+  const theme = document.documentElement.getAttribute("data-bs-theme");
+  tabla.classList.remove("table-dark", "table-light");
+  if (theme === "dark") {
+    tabla.classList.add("table-dark");
+  } else {
+    tabla.classList.add("table-light");
+  }
+
+  tbody.innerHTML = "";
+
+  especialidades.forEach((esp) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${esp.nombre}</td>
+      <td class="text-end">
+        <div class="d-flex flex-row gap-1 justify-content-center">
+          <button class="btn btn-sm btn-warning" onclick="editarEspecialidad(${esp.id})">Editar</button>
+          <button class="btn btn-sm btn-danger" onclick="eliminarEspecialidad(${esp.id})">Eliminar</button>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function limpiarFormularioEspecialidad() {
+  document.getElementById("especialidadId").value = "";
+  document.getElementById("nombreEspecialidad").value = "";
+  document.getElementById("guardarEspecialidadBtn").textContent =
+    "Guardar Especialidad";
+  document.getElementById("cancelarEdicionEspecialidadBtn").style.display =
+    "none";
+}
+
+function aplicarTemaCardsEspecialidad() {
+  const theme = document.documentElement.getAttribute("data-bs-theme");
+  const cardForm = document.getElementById("cardFormEspecialidad");
+  const cardTabla = document.getElementById("cardTablaEspecialidades");
+  [cardForm, cardTabla].forEach((card) => {
+    if (!card) return;
+    card.classList.remove(
+      "bg-light",
+      "bg-dark",
+      "text-light",
+      "text-dark",
+      "border-light",
+      "border-dark"
+    );
+    if (theme === "dark") {
+      card.classList.add("bg-dark", "text-light", "border-light");
+    } else {
+      card.classList.add("bg-light", "text-dark", "border-dark");
+    }
+  });
+}
+
+document
+  .getElementById("formEspecialidad")
+  .addEventListener("submit", function (e) {
+    e.preventDefault();
+    const id = document.getElementById("especialidadId").value;
+    const nombre = document.getElementById("nombreEspecialidad").value.trim();
+
+    if (!nombre) {
+      mostrarMensajeEspecialidad("El nombre es obligatorio.", "danger");
+      return;
+    }
+
+    let especialidades = obtenerEspecialidades();
+
+    if (id) {
+      const idx = especialidades.findIndex((e) => e.id == id);
+      if (idx !== -1) {
+        especialidades[idx].nombre = nombre;
+        mostrarMensajeEspecialidad(
+          "Especialidad actualizada correctamente.",
+          "success"
+        );
+      }
+    } else {
+      const nuevoId = especialidades.length
+        ? Math.max(...especialidades.map((e) => e.id)) + 1
+        : 1;
+      especialidades.push({ id: nuevoId, nombre });
+      mostrarMensajeEspecialidad(
+        "Especialidad agregada correctamente.",
+        "success"
+      );
+    }
+
+    guardarEspecialidades(especialidades);
+    renderizarTablaEspecialidades();
+    limpiarFormularioEspecialidad();
+    renderizarOpcionesEspecialidad();
+  });
+
+window.editarEspecialidad = function (id) {
+  const especialidades = obtenerEspecialidades();
+  const esp = especialidades.find((e) => e.id === id);
+  if (esp) {
+    document.getElementById("especialidadId").value = esp.id;
+    document.getElementById("nombreEspecialidad").value = esp.nombre;
+    document.getElementById("guardarEspecialidadBtn").textContent =
+      "Actualizar Especialidad";
+    document.getElementById("cancelarEdicionEspecialidadBtn").style.display =
+      "inline-block";
+  }
+};
+
+document
+  .getElementById("cancelarEdicionEspecialidadBtn")
+  .addEventListener("click", function () {
+    limpiarFormularioEspecialidad();
+  });
+
+window.eliminarEspecialidad = function (id) {
+  if (confirm("¿Seguro que desea eliminar esta especialidad?")) {
+    let especialidades = obtenerEspecialidades();
+    especialidades = especialidades.filter((e) => e.id !== id);
+    guardarEspecialidades(especialidades);
+    renderizarTablaEspecialidades();
+    limpiarFormularioEspecialidad();
+    mostrarMensajeEspecialidad("Especialidad eliminada.", "success");
+    renderizarOpcionesEspecialidad();
+  }
+};
+
+function mostrarMensajeEspecialidad(mensaje, tipo = "info") {
+  const div = document.getElementById("especialidadMensaje");
+  div.textContent = mensaje;
+  div.className = `alert alert-${tipo}`;
+  div.classList.remove("d-none");
+  setTimeout(() => div.classList.add("d-none"), 2000);
+}
+
+// CRUD OBRAS SOCIALES
+
+function renderizarTablaObrasSociales() {
+  const tbody = document.querySelector("#tablaObrasSociales tbody");
+  const tabla = document.getElementById("tablaObrasSociales");
+  const obrasSociales = obtenerObrasSociales();
+
+  const theme = document.documentElement.getAttribute("data-bs-theme");
+  tabla.classList.remove("table-dark", "table-light");
+  if (theme === "dark") {
+    tabla.classList.add("table-dark");
+  } else {
+    tabla.classList.add("table-light");
+  }
+
+  tbody.innerHTML = "";
+
+  obrasSociales.forEach((os) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${os.nombre}</td>
+      <td>${os.descripcion}</td>
+      <td class="text-end">
+        <div class="d-flex flex-row gap-1 justify-content-center">
+          <button class="btn btn-sm btn-warning" onclick="editarObraSocial(${os.id})">Editar</button>
+          <button class="btn btn-sm btn-danger" onclick="eliminarObraSocial(${os.id})">Eliminar</button>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function limpiarFormularioObraSocial() {
+  document.getElementById("obraSocialId").value = "";
+  document.getElementById("nombreObraSocial").value = "";
+  document.getElementById("descripcionObraSocial").value = "";
+  document.getElementById("guardarObraSocialBtn").textContent =
+    "Guardar Obra Social";
+  document.getElementById("cancelarEdicionObraSocialBtn").style.display =
+    "none";
+}
+
+function aplicarTemaCardsObraSocial() {
+  const theme = document.documentElement.getAttribute("data-bs-theme");
+  const cardForm = document.getElementById("cardFormObraSocial");
+  const cardTabla = document.getElementById("cardTablaObrasSociales");
+  [cardForm, cardTabla].forEach((card) => {
+    if (!card) return;
+    card.classList.remove(
+      "bg-light",
+      "bg-dark",
+      "text-light",
+      "text-dark",
+      "border-light",
+      "border-dark"
+    );
+    if (theme === "dark") {
+      card.classList.add("bg-dark", "text-light", "border-light");
+    } else {
+      card.classList.add("bg-light", "text-dark", "border-dark");
+    }
+  });
+}
+
+document
+  .getElementById("formObraSocial")
+  .addEventListener("submit", function (e) {
+    e.preventDefault();
+    const id = document.getElementById("obraSocialId").value;
+    const nombre = document.getElementById("nombreObraSocial").value.trim();
+    const descripcion = document
+      .getElementById("descripcionObraSocial")
+      .value.trim();
+
+    if (!nombre || !descripcion) {
+      mostrarMensajeObraSocial("Todos los campos son obligatorios.", "danger");
+      return;
+    }
+
+    let obrasSociales = obtenerObrasSociales();
+
+    if (id) {
+      const idx = obrasSociales.findIndex((os) => os.id == id);
+      if (idx !== -1) {
+        obrasSociales[idx].nombre = nombre;
+        obrasSociales[idx].descripcion = descripcion;
+        mostrarMensajeObraSocial(
+          "Obra social actualizada correctamente.",
+          "success"
+        );
+      }
+    } else {
+      const nuevoId = obrasSociales.length
+        ? Math.max(...obrasSociales.map((os) => os.id)) + 1
+        : 1;
+      obrasSociales.push({ id: nuevoId, nombre, descripcion });
+      mostrarMensajeObraSocial(
+        "Obra social agregada correctamente.",
+        "success"
+      );
+    }
+
+    guardarObrasSociales(obrasSociales);
+    renderizarTablaObrasSociales();
+    limpiarFormularioObraSocial();
+    renderizarOpcionesObrasSociales();
+  });
+
+window.editarObraSocial = function (id) {
+  const obrasSociales = obtenerObrasSociales();
+  const os = obrasSociales.find((o) => o.id === id);
+  if (os) {
+    document.getElementById("obraSocialId").value = os.id;
+    document.getElementById("nombreObraSocial").value = os.nombre;
+    document.getElementById("descripcionObraSocial").value = os.descripcion;
+    document.getElementById("guardarObraSocialBtn").textContent =
+      "Actualizar Obra Social";
+    document.getElementById("cancelarEdicionObraSocialBtn").style.display =
+      "inline-block";
+  }
+};
+
+document
+  .getElementById("cancelarEdicionObraSocialBtn")
+  .addEventListener("click", function () {
+    limpiarFormularioObraSocial();
+  });
+
+window.eliminarObraSocial = function (id) {
+  if (confirm("¿Seguro que desea eliminar esta obra social?")) {
+    let obrasSociales = obtenerObrasSociales();
+    obrasSociales = obrasSociales.filter((os) => os.id !== id);
+    guardarObrasSociales(obrasSociales);
+    renderizarTablaObrasSociales();
+    limpiarFormularioObraSocial();
+    mostrarMensajeObraSocial("Obra social eliminada.", "success");
+    renderizarOpcionesObrasSociales();
+  }
+};
+
+function mostrarMensajeObraSocial(mensaje, tipo = "info") {
+  const div = document.getElementById("obraSocialMensaje");
+  div.textContent = mensaje;
+  div.className = `alert alert-${tipo}`;
+  div.classList.remove("d-none");
+  setTimeout(() => div.classList.add("d-none"), 2000);
+}
+
+// OBSERVADOR DE TEMA Y DOM
+
+const observer = new MutationObserver(() => {
+  aplicarTemaCards();
+  aplicarTemaCardsEspecialidad();
+  aplicarTemaCardsObraSocial();
+  renderizarTablaMedicos();
+  renderizarTablaEspecialidades();
+  renderizarTablaObrasSociales();
+
+  const modalContent = document.getElementById("verMedicoModalContent");
+  if (modalContent) {
+    const theme = document.documentElement.getAttribute("data-bs-theme");
+    modalContent.classList.remove(
+      "bg-light",
+      "bg-dark",
+      "text-light",
+      "text-dark"
+    );
+    if (theme === "dark") {
+      modalContent.classList.add("bg-dark", "text-light");
+    } else {
+      modalContent.classList.add("bg-light", "text-dark");
+    }
+  }
+});
+observer.observe(document.documentElement, {
+  attributes: true,
+  attributeFilter: ["data-bs-theme"],
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   renderizarOpcionesEspecialidad();
   renderizarOpcionesObrasSociales();
   renderizarTablaMedicos();
   limpiarFormularioMedico();
   aplicarTemaCards();
+
+  renderizarTablaEspecialidades();
+  limpiarFormularioEspecialidad();
+  aplicarTemaCardsEspecialidad();
+
+  renderizarTablaObrasSociales();
+  limpiarFormularioObraSocial();
+  aplicarTemaCardsObraSocial();
 });
