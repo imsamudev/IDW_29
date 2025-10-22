@@ -73,6 +73,40 @@ export const OBRAS_SOCIALES_INICIALES = [
   { id: 2, nombre: "Swiss Medical", descripcion: "Cobertura médica integral." },
   { id: 3, nombre: "Galeno", descripcion: "Obra social para familias." },
 ];
+
+export const TURNOS_INICIALES = [
+  {
+    id: 1,
+    medicoId: 1,
+    fechaHora: "2025-10-25T09:00",
+    disponible: true,
+  },
+  {
+    id: 2,
+    medicoId: 1,
+    fechaHora: "2025-10-25T10:00",
+    disponible: true,
+  },
+  {
+    id: 3,
+    medicoId: 2,
+    fechaHora: "2025-10-26T11:00",
+    disponible: false,
+  },
+];
+
+export const RESERVAS_INICIALES = [
+  {
+    id: 1,
+    documento: "60134813",
+    nombrePaciente: "Juan Fuckencio",
+    turnoId: 1,
+    especialidadId: 1,
+    obraSocialId: 1,
+    valorTotal: 3500.0,
+  },
+];
+
 export function inicializarAdmin() {
   if (!localStorage.getItem("adminUser")) {
     localStorage.setItem("adminUser", JSON.stringify(ADMIN_USER));
@@ -100,5 +134,15 @@ export function inicializarObrasSociales() {
       "obrasSociales",
       JSON.stringify(OBRAS_SOCIALES_INICIALES)
     );
+  }
+}
+export function inicializarTurnos() {
+  if (!localStorage.getItem("turnos")) {
+    localStorage.setItem("turnos", JSON.stringify(TURNOS_INICIALES));
+  }
+}
+export function inicializarReservas() {
+  if (!localStorage.getItem("reservas")) {
+    localStorage.setItem("reservas", JSON.stringify(RESERVAS_INICIALES));
   }
 }
