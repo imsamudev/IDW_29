@@ -2,11 +2,15 @@ import {
   inicializarMedicos,
   inicializarEspecialidades,
   inicializarObrasSociales,
+  inicializarTurnos,
+  inicializarReservas,
 } from "./datos-iniciales.js";
 
 inicializarMedicos();
 inicializarEspecialidades();
 inicializarObrasSociales();
+inicializarTurnos();
+inicializarReservas();
 
 function obtenerMedicos() {
   return JSON.parse(localStorage.getItem("medicos")) || [];
@@ -25,6 +29,18 @@ function obtenerObrasSociales() {
 }
 function guardarObrasSociales(obrasSociales) {
   localStorage.setItem("obrasSociales", JSON.stringify(obrasSociales));
+}
+function obtenerTurnos() {
+  return JSON.parse(localStorage.getItem("turnos")) || [];
+}
+function guardarTurnos(turnos) {
+  localStorage.setItem("turnos", JSON.stringify(turnos));
+}
+function obtenerReservas() {
+  return JSON.parse(localStorage.getItem("reservas")) || [];
+}
+function guardarReservas(reservas) {
+  localStorage.setItem("reservas", JSON.stringify(reservas));
 }
 
 // CRUD MÉDICOS
@@ -117,7 +133,7 @@ function renderizarOpcionesEspecialidad() {
   const select = document.getElementById("especialidadMedico");
   const especialidades = obtenerEspecialidades();
   select.innerHTML = especialidades
-    .map((e) => `<option value="${e.id}">${e.nombre}</option>`)
+    .map((e) => <option value="${e.id}">${e.nombre}</option>)
     .join("");
 }
 
@@ -298,10 +314,10 @@ window.verMedico = function (id) {
     document.getElementById("verMedicoFoto").src = medico.fotoBase64 || "";
     document.getElementById(
       "verMedicoFoto"
-    ).alt = `${medico.nombre} ${medico.apellido}`;
+    ).alt = ${medico.nombre} ${medico.apellido};
     document.getElementById(
       "verMedicoNombre"
-    ).textContent = `${medico.apellido}, ${medico.nombre}`;
+    ).textContent = ${medico.apellido}, ${medico.nombre};
     document.getElementById("verMedicoEspecialidad").textContent = especialidad
       ? especialidad.nombre
       : "";
@@ -341,7 +357,7 @@ window.verMedico = function (id) {
 function mostrarMensajeMedico(mensaje, tipo = "info") {
   const div = document.getElementById("medicoMensaje");
   div.textContent = mensaje;
-  div.className = `alert alert-${tipo}`;
+  div.className = alert alert-${tipo};
   div.classList.remove("d-none");
   setTimeout(() => div.classList.add("d-none"), 2500);
 }
@@ -483,7 +499,7 @@ window.eliminarEspecialidad = function (id) {
 function mostrarMensajeEspecialidad(mensaje, tipo = "info") {
   const div = document.getElementById("especialidadMensaje");
   div.textContent = mensaje;
-  div.className = `alert alert-${tipo}`;
+  div.className = alert alert-${tipo};
   div.classList.remove("d-none");
   setTimeout(() => div.classList.add("d-none"), 2000);
 }
@@ -632,20 +648,272 @@ window.eliminarObraSocial = function (id) {
 function mostrarMensajeObraSocial(mensaje, tipo = "info") {
   const div = document.getElementById("obraSocialMensaje");
   div.textContent = mensaje;
-  div.className = `alert alert-${tipo}`;
+  div.className = alert alert-${tipo};
   div.classList.remove("d-none");
   setTimeout(() => div.classList.add("d-none"), 2000);
 }
 
-// OBSERVADOR DE TEMA Y DOM
+// CRUD TURNOS
+
+function renderizarTablaTurnos() {
+  const tbody = document.querySelector("#tablaTurnos tbody");
+  const tabla = document.getElementById("tablaTurnos");
+  if (!tbody || !tabla) return;
+  const turnos = obtenerTurnos();
+  const medicos = obtenerMedicos();
+
+  const theme = document.documentElement.getAttribute("data-bs-theme");
+  tabla.classList.remove("table-dark", "table-light");
+  if (theme === "dark") {
+    tabla.classList.add("table-dark");
+  } else {
+    tabla.classList.add("table-light");
+  }
+
+  tbody.innerHTML = "";
+
+  turnos.forEach((turno) => {
+    const medico = medicos.find((m) => m.id === turno.medicoId);
+    const fechaHora = new Date(turno.fechaHora);
+    const fechaStr = fechaHora.toLocaleDateString();
+    const horaStr = fechaHora.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    const disponibleStr = turno.disponible ? "Sí" : "No";
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${medico ? medico.apellido + ", " + medico.nombre : "-"}</td>
+      <td>${fechaStr}</td>
+      <td>${horaStr}</td>
+      <td>${disponibleStr}</td>
+      <td class="text-end">
+        <div class="d-flex flex-row gap-1 justify-content-center">
+          <button class="btn btn-sm btn-warning" onclick="editarTurno(${
+            turno.id
+          })">Editar</button>
+          <button class="btn btn-sm btn-danger" onclick="eliminarTurno(${
+            turno.id
+          })">Eliminar</button>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+function limpiarFormularioTurno() {
+  const id = document.getElementById("turnoId");
+  const medico = document.getElementById("medicoTurno");
+  const fechaHora = document.getElementById("fechaHoraTurno");
+  const disponible = document.getElementById("disponibleTurno");
+  if (id) id.value = "";
+  if (medico) medico.value = "";
+  if (fechaHora) fechaHora.value = "";
+  if (disponible) disponible.checked = true;
+  const guardarBtn = document.getElementById("guardarTurnoBtn");
+  const cancelarBtn = document.getElementById("cancelarEdicionTurnoBtn");
+  if (guardarBtn) guardarBtn.textContent = "Guardar Turno";
+  if (cancelarBtn) cancelarBtn.style.display = "none";
+}
+
+function renderizarOpcionesMedicoTurno() {
+  const select = document.getElementById("medicoTurno");
+  if (!select) return;
+  const medicos = obtenerMedicos();
+  select.innerHTML = medicos
+    .map((m) => <option value="${m.id}">${m.apellido}, ${m.nombre}</option>)
+    .join("");
+}
+
+const formTurno = document.getElementById("formTurno");
+if (formTurno) {
+  formTurno.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const id = document.getElementById("turnoId").value;
+    const medicoId = parseInt(document.getElementById("medicoTurno").value);
+    const fechaHora = document.getElementById("fechaHoraTurno").value;
+    const disponible = document.getElementById("disponibleTurno").checked;
+
+    if (!medicoId || !fechaHora) {
+      mostrarMensajeTurno("Todos los campos son obligatorios.", "danger");
+      return;
+    }
+
+    let turnos = obtenerTurnos();
+
+    if (id) {
+      const idx = turnos.findIndex((t) => t.id == id);
+      if (idx !== -1) {
+        turnos[idx].medicoId = medicoId;
+        turnos[idx].fechaHora = fechaHora;
+        turnos[idx].disponible = disponible;
+        mostrarMensajeTurno("Turno actualizado correctamente.", "success");
+      }
+    } else {
+      const nuevoId = turnos.length
+        ? Math.max(...turnos.map((t) => t.id)) + 1
+        : 1;
+      turnos.push({ id: nuevoId, medicoId, fechaHora, disponible });
+      mostrarMensajeTurno("Turno agregado correctamente.", "success");
+    }
+
+    guardarTurnos(turnos);
+    renderizarTablaTurnos();
+    limpiarFormularioTurno();
+  });
+}
+
+window.editarTurno = function (id) {
+  const turnos = obtenerTurnos();
+  const turno = turnos.find((t) => t.id === id);
+  if (turno) {
+    document.getElementById("turnoId").value = turno.id;
+    document.getElementById("medicoTurno").value = turno.medicoId;
+    document.getElementById("fechaHoraTurno").value = turno.fechaHora;
+    document.getElementById("disponibleTurno").checked = turno.disponible;
+    document.getElementById("guardarTurnoBtn").textContent = "Actualizar Turno";
+    document.getElementById("cancelarEdicionTurnoBtn").style.display =
+      "inline-block";
+  }
+};
+
+const cancelarEdicionTurnoBtn = document.getElementById(
+  "cancelarEdicionTurnoBtn"
+);
+if (cancelarEdicionTurnoBtn) {
+  cancelarEdicionTurnoBtn.addEventListener("click", function () {
+    limpiarFormularioTurno();
+  });
+}
+
+window.eliminarTurno = function (id) {
+  if (confirm("¿Seguro que desea eliminar este turno?")) {
+    let turnos = obtenerTurnos();
+    turnos = turnos.filter((t) => t.id !== id);
+    guardarTurnos(turnos);
+    renderizarTablaTurnos();
+    limpiarFormularioTurno();
+    mostrarMensajeTurno("Turno eliminado.", "success");
+  }
+};
+
+function mostrarMensajeTurno(mensaje, tipo = "info") {
+  const div = document.getElementById("turnoMensaje");
+  if (!div) return;
+  div.textContent = mensaje;
+  div.className = alert alert-${tipo};
+  div.classList.remove("d-none");
+  setTimeout(() => div.classList.add("d-none"), 2000);
+}
+
+function aplicarTemaCardsTurno() {
+  const theme = document.documentElement.getAttribute("data-bs-theme");
+  const cardForm = document.getElementById("cardFormTurno");
+  const cardTabla = document.getElementById("cardTablaTurnos");
+  [cardForm, cardTabla].forEach((card) => {
+    if (!card) return;
+    card.classList.remove(
+      "bg-light",
+      "bg-dark",
+      "text-light",
+      "text-dark",
+      "border-light",
+      "border-dark"
+    );
+    if (theme === "dark") {
+      card.classList.add("bg-dark", "text-light", "border-light");
+    } else {
+      card.classList.add("bg-light", "text-dark", "border-dark");
+    }
+  });
+}
+
+// CRUD RESERVAS
+
+function renderizarTablaReservas() {
+  const tbody = document.querySelector("#tablaReservas tbody");
+  const tabla = document.getElementById("tablaReservas");
+  if (!tbody || !tabla) return;
+  const reservas = obtenerReservas();
+  const turnos = obtenerTurnos();
+  const medicos = obtenerMedicos();
+  const especialidades = obtenerEspecialidades();
+  const obrasSociales = obtenerObrasSociales();
+
+  const theme = document.documentElement.getAttribute("data-bs-theme");
+  tabla.classList.remove("table-dark", "table-light");
+  if (theme === "dark") {
+    tabla.classList.add("table-dark");
+  } else {
+    tabla.classList.add("table-light");
+  }
+
+  tbody.innerHTML = "";
+
+  reservas.forEach((reserva) => {
+    const turno = turnos.find((t) => t.id === reserva.turnoId);
+    const medico = turno ? medicos.find((m) => m.id === turno.medicoId) : null;
+    const especialidad = especialidades.find(
+      (e) => e.id === reserva.especialidadId
+    );
+    const obraSocial = obrasSociales.find(
+      (os) => os.id === reserva.obraSocialId
+    );
+    const fechaHora = turno ? new Date(turno.fechaHora) : null;
+    const fechaStr = fechaHora ? fechaHora.toLocaleDateString() : "-";
+    const horaStr = fechaHora
+      ? fechaHora.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+      : "-";
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${reserva.documento}</td>
+      <td>${reserva.nombrePaciente}</td>
+      <td>${medico ? medico.apellido + ", " + medico.nombre : "-"}</td>
+      <td>${especialidad ? especialidad.nombre : "-"}</td>
+      <td>${obraSocial ? obraSocial.nombre : "-"}</td>
+      <td>${fechaStr}</td>
+      <td>${horaStr}</td>
+      <td>${reserva.valorTotal.toLocaleString("es-AR", {
+        style: "currency",
+        currency: "ARS",
+      })}</td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+function aplicarTemaCardsReservas() {
+  const theme = document.documentElement.getAttribute("data-bs-theme");
+  const cardTabla = document.getElementById("cardTablaReservas");
+  if (!cardTabla) return;
+  cardTabla.classList.remove(
+    "bg-light",
+    "bg-dark",
+    "text-light",
+    "text-dark",
+    "border-light",
+    "border-dark"
+  );
+  if (theme === "dark") {
+    cardTabla.classList.add("bg-dark", "text-light", "border-light");
+  } else {
+    cardTabla.classList.add("bg-light", "text-dark", "border-dark");
+  }
+}
 
 const observer = new MutationObserver(() => {
   aplicarTemaCards();
   aplicarTemaCardsEspecialidad();
   aplicarTemaCardsObraSocial();
+  aplicarTemaCardsTurno();
+  aplicarTemaCardsReservas();
   renderizarTablaMedicos();
   renderizarTablaEspecialidades();
   renderizarTablaObrasSociales();
+  renderizarTablaTurnos();
+  renderizarTablaReservas();
 
   const modalContent = document.getElementById("verMedicoModalContent");
   if (modalContent) {
@@ -671,6 +939,7 @@ observer.observe(document.documentElement, {
 document.addEventListener("DOMContentLoaded", () => {
   renderizarOpcionesEspecialidad();
   renderizarOpcionesObrasSociales();
+  renderizarOpcionesMedicoTurno();
   renderizarTablaMedicos();
   limpiarFormularioMedico();
   aplicarTemaCards();
@@ -682,4 +951,11 @@ document.addEventListener("DOMContentLoaded", () => {
   renderizarTablaObrasSociales();
   limpiarFormularioObraSocial();
   aplicarTemaCardsObraSocial();
+
+  renderizarTablaTurnos();
+  limpiarFormularioTurno();
+  aplicarTemaCardsTurno();
+
+  renderizarTablaReservas();
+  aplicarTemaCardsReservas();
 });
