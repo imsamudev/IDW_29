@@ -133,7 +133,7 @@ function renderizarOpcionesEspecialidad() {
   const select = document.getElementById("especialidadMedico");
   const especialidades = obtenerEspecialidades();
   select.innerHTML = especialidades
-    .map((e) => <option value="${e.id}">${e.nombre}</option>)
+    .map((e) => `<option value="${e.id}">${e.nombre}</option>`)
     .join("");
 }
 
@@ -288,6 +288,14 @@ document
   });
 
 window.eliminarMedico = function (id) {
+  const turnos = obtenerTurnos();
+  if (turnos.some((t) => t.medicoId === id)) {
+    mostrarMensajeMedico(
+      "No se puede eliminar: hay turnos asignados a este médico.",
+      "danger"
+    );
+    return;
+  }
   if (confirm("¿Seguro que desea eliminar este médico?")) {
     let medicos = obtenerMedicos();
     medicos = medicos.filter((m) => m.id !== id);
@@ -314,10 +322,10 @@ window.verMedico = function (id) {
     document.getElementById("verMedicoFoto").src = medico.fotoBase64 || "";
     document.getElementById(
       "verMedicoFoto"
-    ).alt = ${medico.nombre} ${medico.apellido};
+    ).alt = `${medico.nombre} ${medico.apellido}`;
     document.getElementById(
       "verMedicoNombre"
-    ).textContent = ${medico.apellido}, ${medico.nombre};
+    ).textContent = `${medico.apellido}, ${medico.nombre}`;
     document.getElementById("verMedicoEspecialidad").textContent = especialidad
       ? especialidad.nombre
       : "";
@@ -357,7 +365,7 @@ window.verMedico = function (id) {
 function mostrarMensajeMedico(mensaje, tipo = "info") {
   const div = document.getElementById("medicoMensaje");
   div.textContent = mensaje;
-  div.className = alert alert-${tipo};
+  div.className = `alert alert-${tipo}`;
   div.classList.remove("d-none");
   setTimeout(() => div.classList.add("d-none"), 2500);
 }
@@ -485,6 +493,14 @@ document
   });
 
 window.eliminarEspecialidad = function (id) {
+  const medicos = obtenerMedicos();
+  if (medicos.some((m) => m.especialidadId === id)) {
+    mostrarMensajeEspecialidad(
+      "No se puede eliminar: hay médicos con esta especialidad.",
+      "danger"
+    );
+    return;
+  }
   if (confirm("¿Seguro que desea eliminar esta especialidad?")) {
     let especialidades = obtenerEspecialidades();
     especialidades = especialidades.filter((e) => e.id !== id);
@@ -499,7 +515,7 @@ window.eliminarEspecialidad = function (id) {
 function mostrarMensajeEspecialidad(mensaje, tipo = "info") {
   const div = document.getElementById("especialidadMensaje");
   div.textContent = mensaje;
-  div.className = alert alert-${tipo};
+  div.className = `alert alert-${tipo}`;
   div.classList.remove("d-none");
   setTimeout(() => div.classList.add("d-none"), 2000);
 }
@@ -634,6 +650,14 @@ document
   });
 
 window.eliminarObraSocial = function (id) {
+  const medicos = obtenerMedicos();
+  if (medicos.some((m) => m.obrasSociales.includes(id))) {
+    mostrarMensajeObraSocial(
+      "No se puede eliminar: hay médicos que aceptan esta obra social.",
+      "danger"
+    );
+    return;
+  }
   if (confirm("¿Seguro que desea eliminar esta obra social?")) {
     let obrasSociales = obtenerObrasSociales();
     obrasSociales = obrasSociales.filter((os) => os.id !== id);
@@ -648,7 +672,7 @@ window.eliminarObraSocial = function (id) {
 function mostrarMensajeObraSocial(mensaje, tipo = "info") {
   const div = document.getElementById("obraSocialMensaje");
   div.textContent = mensaje;
-  div.className = alert alert-${tipo};
+  div.className = `alert alert-${tipo}`;
   div.classList.remove("d-none");
   setTimeout(() => div.classList.add("d-none"), 2000);
 }
@@ -722,7 +746,7 @@ function renderizarOpcionesMedicoTurno() {
   if (!select) return;
   const medicos = obtenerMedicos();
   select.innerHTML = medicos
-    .map((m) => <option value="${m.id}">${m.apellido}, ${m.nombre}</option>)
+    .map((m) => `<option value="${m.id}">${m.apellido}, ${m.nombre}</option>`)
     .join("");
 }
 
@@ -788,6 +812,14 @@ if (cancelarEdicionTurnoBtn) {
 }
 
 window.eliminarTurno = function (id) {
+  const reservas = obtenerReservas();
+  if (reservas.some((r) => r.turnoId === id)) {
+    mostrarMensajeTurno(
+      "No se puede eliminar: hay reservas asociadas a este turno.",
+      "danger"
+    );
+    return;
+  }
   if (confirm("¿Seguro que desea eliminar este turno?")) {
     let turnos = obtenerTurnos();
     turnos = turnos.filter((t) => t.id !== id);
@@ -802,7 +834,7 @@ function mostrarMensajeTurno(mensaje, tipo = "info") {
   const div = document.getElementById("turnoMensaje");
   if (!div) return;
   div.textContent = mensaje;
-  div.className = alert alert-${tipo};
+  div.className = `alert alert-${tipo}`;
   div.classList.remove("d-none");
   setTimeout(() => div.classList.add("d-none"), 2000);
 }
