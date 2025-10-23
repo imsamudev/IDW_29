@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (logoutBtn) {
       logoutBtn.addEventListener("click", () => {
         localStorage.removeItem("isAdminLogged");
-        window.location.href = "Index.html";
+        window.location.href = "index.html";
       });
     }
   }
