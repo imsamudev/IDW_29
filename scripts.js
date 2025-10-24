@@ -1,4 +1,11 @@
-import { inicializarAdmin } from "./datos-iniciales.js";
+import {
+  inicializarAdmin,
+  inicializarMedicos,
+  inicializarEspecialidades,
+  inicializarObrasSociales,
+  inicializarTurnos,
+  inicializarReservas,
+} from "./datos-iniciales.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const toggle = document.getElementById("darkModeToggle");
@@ -27,6 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   inicializarAdmin();
+  inicializarMedicos();
+  inicializarEspecialidades();
+  inicializarObrasSociales();
+  inicializarTurnos();
+  inicializarReservas();
 
   if (window.location.pathname.endsWith("login.html")) {
     const form = document.getElementById("loginForm");
