@@ -1,4 +1,7 @@
 /* Reset*/
+html {
+  scroll-behavior: smooth;
+}
 html,
 body {
   width: 100%;
@@ -167,51 +170,88 @@ input[type="password"]::-webkit-textfield-decoration-container {
 /* ========================= */
 /* Hero */
 .hero {
-  background: url("assets/background1.png") center center/cover no-repeat;
-  color: var(--negro);
-  min-height: 340px;
-  box-shadow: var(--sombra);
   position: relative;
+  width: 100%;
+  height: 100dvh;
+  min-height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  padding: 1rem;
+  justify-content: center;
+  padding: 0;
 }
-
-.hero::before {
-  content: "";
+.hero {
+  background: url("assets/clínicaIDW.jpg") center center/cover no-repeat;
+  animation: heroZoom 10s ease-in-out infinite;
+}
+.hero-bg-img {
   position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  object-fit: cover;
+  object-position: center center;
+  z-index: 0;
+  min-width: 100vw;
+  min-height: 100dvh;
+  pointer-events: none;
+  user-select: none;
+  animation: heroImgZoom 10s ease-in-out infinite;
+  will-change: transform;
 }
-
+@keyframes heroImgZoom {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 .hero-content {
   position: relative;
-  z-index: 2;
+  z-index: 1;
+  max-width: 700px;
+  width: 90vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  margin: 0 auto;
+  color: var(--negro);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(4px);
+  padding: 2rem 2rem;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+  border-radius: var(--borde-radius);
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  text-align: right;
-  max-width: 480px;
-  width: 100%;
-  margin-right: 2vw;
-  /* Fondo semi-transparente */
-  background: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+[data-bs-theme="dark"] .hero-content {
+  color: var(--blanco);
+  background: rgba(30, 40, 60, 0.55);
 }
 
+[data-bs-theme="dark"] .hero h1,
+[data-bs-theme="dark"] .hero h3,
+[data-bs-theme="dark"] .hero p {
+  color: var(--blanco) !important;
+}
 .hero-logo {
   width: 150px;
   height: 150px;
-  border-radius: 50%;
-  background: var(--blanco);
   padding: 6px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  margin-bottom: 1rem;
 }
 
 .hero h1 {
-  font-size: 4rem;
+  font-size: 3rem;
+  font-weight: 500;
   margin-bottom: 0.5rem;
   letter-spacing: 1px;
 }
@@ -538,17 +578,6 @@ footer span {
 /* Etiquetas del formulario en blanco en modo oscuro */
 [data-bs-theme="dark"] .form-contacto label {
   color: #e7ecefff !important;
-}
-@media (max-width: 768px) {
-  .hero {
-    background-position: 10% center;
-  }
-  .hero-content {
-    color: var(--blanco);
-    background: rgba(0, 0, 0, 0.4);
-    padding: 1.2rem;
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
-  }
 }
 [data-bs-theme="dark"] #catalogoMedicos .card {
   background: var(--azul) !important;
