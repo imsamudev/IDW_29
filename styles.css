@@ -595,3 +595,23 @@ footer span {
 [data-bs-theme="dark"] #catalogoMedicos .text-muted {
   color: #b0b8c1 !important;
 }
+@media (max-width: 768px) {
+  .hero-content {
+    overflow: hidden;
+    padding: 0.5rem 0.2rem;
+    font-size: 1rem;
+  }
+  .hero-logo {
+    width: 90px;
+    height: 90px;
+  }
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .hero h3 {
+    font-size: 1rem;
+  }
+  .hero p {
+    font-size: 0.75rem;
+  }
+}
