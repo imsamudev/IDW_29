@@ -542,6 +542,7 @@ function renderizarTablaObrasSociales() {
     tr.innerHTML = `
       <td>${os.nombre}</td>
       <td>${os.descripcion}</td>
+      <td><span class="badge bg-success">${os.porcentaje}%</span></td>
       <td class="text-end">
         <div class="d-flex flex-row gap-1 justify-content-center">
           <button class="btn btn-sm btn-warning" onclick="editarObraSocial(${os.id})">Editar</button>
@@ -556,6 +557,7 @@ function renderizarTablaObrasSociales() {
 function limpiarFormularioObraSocial() {
   document.getElementById("obraSocialId").value = "";
   document.getElementById("nombreObraSocial").value = "";
+  document.getElementById("porcentajeObraSocial").value = "";
   document.getElementById("descripcionObraSocial").value = "";
   document.getElementById("guardarObraSocialBtn").textContent =
     "Guardar Obra Social";
@@ -591,12 +593,23 @@ document
     e.preventDefault();
     const id = document.getElementById("obraSocialId").value;
     const nombre = document.getElementById("nombreObraSocial").value.trim();
+    const porcentaje = parseFloat(
+      document.getElementById("porcentajeObraSocial").value
+    );
     const descripcion = document
       .getElementById("descripcionObraSocial")
       .value.trim();
 
-    if (!nombre || !descripcion) {
+    if (!nombre || !descripcion || isNaN(porcentaje)) {
       mostrarMensajeObraSocial("Todos los campos son obligatorios.", "danger");
+      return;
+    }
+
+    if (porcentaje < 0 || porcentaje > 100) {
+      mostrarMensajeObraSocial(
+        "El porcentaje debe estar entre 0 y 100.",
+        "danger"
+      );
       return;
     }
 
@@ -606,6 +619,7 @@ document
       const idx = obrasSociales.findIndex((os) => os.id == id);
       if (idx !== -1) {
         obrasSociales[idx].nombre = nombre;
+        obrasSociales[idx].porcentaje = porcentaje;
         obrasSociales[idx].descripcion = descripcion;
         mostrarMensajeObraSocial(
           "Obra social actualizada correctamente.",
@@ -616,7 +630,7 @@ document
       const nuevoId = obrasSociales.length
         ? Math.max(...obrasSociales.map((os) => os.id)) + 1
         : 1;
-      obrasSociales.push({ id: nuevoId, nombre, descripcion });
+      obrasSociales.push({ id: nuevoId, nombre, porcentaje, descripcion });
       mostrarMensajeObraSocial(
         "Obra social agregada correctamente.",
         "success"
@@ -635,6 +649,7 @@ window.editarObraSocial = function (id) {
   if (os) {
     document.getElementById("obraSocialId").value = os.id;
     document.getElementById("nombreObraSocial").value = os.nombre;
+    document.getElementById("porcentajeObraSocial").value = os.porcentaje;
     document.getElementById("descripcionObraSocial").value = os.descripcion;
     document.getElementById("guardarObraSocialBtn").textContent =
       "Actualizar Obra Social";

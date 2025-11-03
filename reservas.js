@@ -93,7 +93,10 @@ function cargarObrasSociales(medicoId = "") {
   obraSocialSelect.innerHTML =
     `<option value="">Seleccionar...</option>` +
     opciones
-      .map((os) => `<option value="${os.id}">${os.nombre}</option>`)
+      .map(
+        (os) =>
+          `<option value="${os.id}">${os.nombre} (${os.porcentaje}% desc.)</option>`
+      )
       .join("");
 }
 
@@ -135,6 +138,7 @@ especialidadSelect.addEventListener("change", () => {
   cargarTurnos("");
   turnoSelect.value = "";
   valorReservaInput.value = "";
+  limpiarDesglose();
 });
 
 medicoSelect.addEventListener("change", () => {
@@ -155,19 +159,83 @@ turnoSelect.addEventListener("change", () => {
 
 function actualizarValorConsulta() {
   const medicoId = medicoSelect.value;
+  const obraSocialId = obraSocialSelect.value;
+
   if (!medicoId) {
     valorReservaInput.value = "";
+    limpiarDesglose();
     return;
   }
+
   const medico = obtenerMedicos().find((m) => m.id == medicoId);
   if (!medico) {
     valorReservaInput.value = "";
+    limpiarDesglose();
     return;
   }
-  valorReservaInput.value = medico.valorConsulta.toLocaleString("es-AR", {
+
+  const valorBase = medico.valorConsulta;
+  let valorFinal = valorBase;
+  let descuento = 0;
+  let porcentaje = 0;
+
+  // Si hay obra social seleccionada, aplicar descuento
+  if (obraSocialId) {
+    const obraSocial = obtenerObrasSociales().find(
+      (os) => os.id == obraSocialId
+    );
+    if (obraSocial && obraSocial.porcentaje) {
+      porcentaje = obraSocial.porcentaje;
+      descuento = valorBase * (porcentaje / 100);
+      valorFinal = valorBase - descuento;
+    }
+  }
+
+  valorReservaInput.value = valorFinal.toLocaleString("es-AR", {
     style: "currency",
     currency: "ARS",
   });
+
+  mostrarDesglose(valorBase, descuento, porcentaje, valorFinal);
+}
+
+function mostrarDesglose(valorBase, descuento, porcentaje, valorFinal) {
+  let desgloseDiv = document.getElementById("desgloseValor");
+
+  if (!desgloseDiv) {
+    desgloseDiv = document.createElement("div");
+    desgloseDiv.id = "desgloseValor";
+    desgloseDiv.className = "alert alert-info mt-2 mb-0 small";
+    valorReservaInput.parentElement.appendChild(desgloseDiv);
+  }
+
+  if (descuento > 0) {
+    desgloseDiv.innerHTML = `
+      <strong>Desglose del precio:</strong><br>
+      • Valor consulta: ${valorBase.toLocaleString("es-AR", {
+        style: "currency",
+        currency: "ARS",
+      })}<br>
+      • Descuento (${porcentaje}%): -${descuento.toLocaleString("es-AR", {
+      style: "currency",
+      currency: "ARS",
+    })}<br>
+      • <strong>Total a pagar: ${valorFinal.toLocaleString("es-AR", {
+        style: "currency",
+        currency: "ARS",
+      })}</strong>
+    `;
+    desgloseDiv.classList.remove("d-none");
+  } else {
+    desgloseDiv.classList.add("d-none");
+  }
+}
+
+function limpiarDesglose() {
+  const desgloseDiv = document.getElementById("desgloseValor");
+  if (desgloseDiv) {
+    desgloseDiv.classList.add("d-none");
+  }
 }
 
 formReserva.addEventListener("submit", function (e) {
@@ -196,7 +264,21 @@ formReserva.addEventListener("submit", function (e) {
     mostrarMensaje("Médico no encontrado.", "danger");
     return;
   }
-  const valorTotal = medico.valorConsulta;
+
+  // Calcular valor total con descuento
+  const valorBase = medico.valorConsulta;
+  let valorTotal = valorBase;
+  let descuento = 0;
+  let porcentaje = 0;
+
+  const obraSocial = obtenerObrasSociales().find(
+    (os) => os.id === obraSocialId
+  );
+  if (obraSocial && obraSocial.porcentaje) {
+    porcentaje = obraSocial.porcentaje;
+    descuento = valorBase * (porcentaje / 100);
+    valorTotal = valorBase - descuento;
+  }
 
   let reservas = obtenerReservas();
   const nuevoId = reservas.length
@@ -225,8 +307,11 @@ formReserva.addEventListener("submit", function (e) {
     nombrePaciente,
     medico,
     especialidad: obtenerEspecialidades().find((e) => e.id === especialidadId),
-    obraSocial: obtenerObrasSociales().find((os) => os.id === obraSocialId),
+    obraSocial,
     turno: turnos[idxTurno],
+    valorBase,
+    descuento,
+    porcentaje,
     valorTotal,
   });
 
@@ -235,6 +320,7 @@ formReserva.addEventListener("submit", function (e) {
   cargarObrasSociales("");
   cargarTurnos("");
   valorReservaInput.value = "";
+  limpiarDesglose();
 });
 
 function mostrarMensaje(msg, tipo = "info") {
@@ -251,6 +337,9 @@ function mostrarResumenReserva({
   especialidad,
   obraSocial,
   turno,
+  valorBase,
+  descuento,
+  porcentaje,
   valorTotal,
 }) {
   const fechaHora = turno ? new Date(turno.fechaHora) : null;
@@ -258,6 +347,24 @@ function mostrarResumenReserva({
   const horaStr = fechaHora
     ? fechaHora.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
     : "-";
+
+  let desgloseHTML = "";
+  if (descuento > 0) {
+    desgloseHTML = `
+      <li><strong>Valor consulta:</strong> ${valorBase.toLocaleString("es-AR", {
+        style: "currency",
+        currency: "ARS",
+      })}</li>
+      <li><strong>Descuento aplicado:</strong> ${porcentaje}% (-${descuento.toLocaleString(
+      "es-AR",
+      {
+        style: "currency",
+        currency: "ARS",
+      }
+    )})</li>
+    `;
+  }
+
   resumenDiv.innerHTML = `
     <h5>¡Reserva confirmada!</h5>
     <ul class="mb-0">
@@ -273,10 +380,14 @@ function mostrarResumenReserva({
       }</li>
       <li><strong>Fecha:</strong> ${fechaStr}</li>
       <li><strong>Hora:</strong> ${horaStr}</li>
-      <li><strong>Valor Total:</strong> ${valorTotal.toLocaleString("es-AR", {
-        style: "currency",
-        currency: "ARS",
-      })}</li>
+      ${desgloseHTML}
+      <li class="mt-2"><strong>Total a pagar:</strong> <span class="text-success fs-5">${valorTotal.toLocaleString(
+        "es-AR",
+        {
+          style: "currency",
+          currency: "ARS",
+        }
+      )}</span></li>
     </ul>
   `;
   resumenDiv.classList.remove("d-none");
@@ -290,4 +401,5 @@ document.addEventListener("DOMContentLoaded", () => {
   cargarTurnos();
   valorReservaInput.value = "";
   resumenDiv.classList.add("d-none");
+  limpiarDesglose();
 });

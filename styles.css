@@ -591,6 +591,14 @@ footer span {
 [data-bs-theme="dark"] #catalogoMedicos .text-muted {
   color: #b0b8c1 !important;
 }
+
+.form-text {
+  color: #6c757d;
+}
+
+[data-bs-theme="dark"] .form-text {
+  color: #bfc9d1;
+}
 @media (max-width: 768px) {
   .hero-content {
     overflow: hidden;
