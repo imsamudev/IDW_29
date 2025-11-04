@@ -166,182 +166,40 @@ export const OBRAS_SOCIALES_INICIALES = [
   },
 ];
 
-export const TURNOS_INICIALES = [
-  {
-    id: 1,
-    medicoId: 1,
-    fechaHora: "2025-11-10T09:00",
-    disponible: true,
-  },
-  {
-    id: 2,
-    medicoId: 1,
-    fechaHora: "2025-11-10T10:00",
-    disponible: true,
-  },
-  {
-    id: 3,
-    medicoId: 1,
-    fechaHora: "2025-11-10T11:00",
-    disponible: true,
-  },
-  {
-    id: 4,
-    medicoId: 1,
-    fechaHora: "2025-11-11T14:00",
-    disponible: true,
-  },
-  {
-    id: 5,
-    medicoId: 1,
-    fechaHora: "2025-11-11T15:00",
-    disponible: false,
-  },
-  {
-    id: 6,
-    medicoId: 2,
-    fechaHora: "2025-11-10T08:00",
-    disponible: true,
-  },
-  {
-    id: 7,
-    medicoId: 2,
-    fechaHora: "2025-11-10T09:00",
-    disponible: true,
-  },
-  {
-    id: 8,
-    medicoId: 2,
-    fechaHora: "2025-11-11T10:00",
-    disponible: false,
-  },
-  {
-    id: 9,
-    medicoId: 2,
-    fechaHora: "2025-11-12T11:00",
-    disponible: true,
-  },
-  {
-    id: 10,
-    medicoId: 3,
-    fechaHora: "2025-11-10T13:00",
-    disponible: true,
-  },
-  {
-    id: 11,
-    medicoId: 3,
-    fechaHora: "2025-11-10T14:00",
-    disponible: true,
-  },
-  {
-    id: 12,
-    medicoId: 3,
-    fechaHora: "2025-11-11T09:00",
-    disponible: true,
-  },
-  {
-    id: 13,
-    medicoId: 3,
-    fechaHora: "2025-11-12T16:00",
-    disponible: true,
-  },
-  {
-    id: 14,
-    medicoId: 4,
-    fechaHora: "2025-11-10T08:30",
-    disponible: true,
-  },
-  {
-    id: 15,
-    medicoId: 4,
-    fechaHora: "2025-11-10T10:30",
-    disponible: true,
-  },
-  {
-    id: 16,
-    medicoId: 4,
-    fechaHora: "2025-11-11T11:00",
-    disponible: true,
-  },
-  {
-    id: 17,
-    medicoId: 4,
-    fechaHora: "2025-11-12T09:00",
-    disponible: true,
-  },
-  {
-    id: 18,
-    medicoId: 5,
-    fechaHora: "2025-11-10T15:00",
-    disponible: true,
-  },
-  {
-    id: 19,
-    medicoId: 5,
-    fechaHora: "2025-11-11T16:00",
-    disponible: true,
-  },
-  {
-    id: 20,
-    medicoId: 5,
-    fechaHora: "2025-11-12T14:00",
-    disponible: true,
-  },
-  {
-    id: 21,
-    medicoId: 6,
-    fechaHora: "2025-11-10T09:30",
-    disponible: true,
-  },
-  {
-    id: 22,
-    medicoId: 6,
-    fechaHora: "2025-11-11T10:30",
-    disponible: true,
-  },
-  {
-    id: 23,
-    medicoId: 6,
-    fechaHora: "2025-11-12T08:00",
-    disponible: true,
-  },
-  {
-    id: 24,
-    medicoId: 7,
-    fechaHora: "2025-11-10T12:00",
-    disponible: true,
-  },
-  {
-    id: 25,
-    medicoId: 7,
-    fechaHora: "2025-11-11T13:00",
-    disponible: true,
-  },
-  {
-    id: 26,
-    medicoId: 7,
-    fechaHora: "2025-11-12T15:00",
-    disponible: true,
-  },
-  {
-    id: 27,
-    medicoId: 8,
-    fechaHora: "2025-11-10T11:00",
-    disponible: true,
-  },
-  {
-    id: 28,
-    medicoId: 8,
-    fechaHora: "2025-11-11T12:00",
-    disponible: true,
-  },
-  {
-    id: 29,
-    medicoId: 8,
-    fechaHora: "2025-11-12T10:00",
-    disponible: true,
-  },
-];
+function generarTurnosDinamicos() {
+  const turnos = [];
+  let turnoId = 1;
+
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+
+  const horasPosibles = [8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 21];
+
+  MEDICOS_INICIALES.forEach((medico) => {
+    for (let i = 0; i < 5; i++) {
+      const diasAdelante = Math.floor(Math.random() * 30) + 1;
+      const fechaTurno = new Date(hoy);
+      fechaTurno.setDate(fechaTurno.getDate() + diasAdelante);
+
+      const hora =
+        horasPosibles[Math.floor(Math.random() * horasPosibles.length)];
+      fechaTurno.setHours(hora, 0, 0, 0);
+
+      const disponible = Math.random() > 0.15;
+
+      turnos.push({
+        id: turnoId++,
+        medicoId: medico.id,
+        fechaHora: fechaTurno.toISOString().slice(0, 16),
+        disponible: disponible,
+      });
+    }
+  });
+
+  return turnos.sort((a, b) => new Date(a.fechaHora) - new Date(b.fechaHora));
+}
+
+export const TURNOS_INICIALES = generarTurnosDinamicos();
 
 export const RESERVAS_INICIALES = [
   {
@@ -403,10 +261,34 @@ export function inicializarObrasSociales() {
   }
 }
 export function inicializarTurnos() {
-  if (!localStorage.getItem("turnos")) {
-    localStorage.setItem("turnos", JSON.stringify(TURNOS_INICIALES));
+  const turnosGuardados = localStorage.getItem("turnos");
+
+  if (!turnosGuardados) {
+    localStorage.setItem("turnos", JSON.stringify(generarTurnosDinamicos()));
+    console.log(
+      "Turnos iniciales generados, para agregar uno nuevo inicia sesión como admin!"
+    );
+    return;
+  }
+
+  const turnos = JSON.parse(turnosGuardados);
+  const ahora = new Date();
+
+  const turnosValidos = turnos.filter((t) => new Date(t.fechaHora) > ahora);
+
+  if (turnosValidos.length < 15) {
+    console.log(
+      "Regenerando turnos (posiblemente pocos turnos disponibles)..."
+    );
+    localStorage.setItem("turnos", JSON.stringify(generarTurnosDinamicos()));
+  } else if (turnosValidos.length < turnos.length) {
+    console.log(
+      `${turnos.length - turnosValidos.length} turnos obsoletos eliminados`
+    );
+    localStorage.setItem("turnos", JSON.stringify(turnosValidos));
   }
 }
+
 export function inicializarReservas() {
   if (!localStorage.getItem("reservas")) {
     localStorage.setItem("reservas", JSON.stringify(RESERVAS_INICIALES));

@@ -12,6 +12,22 @@ inicializarObrasSociales();
 inicializarTurnos();
 inicializarReservas();
 
+function limpiarTurnosObsoletosAdmin() {
+  const turnos = obtenerTurnos();
+  const ahora = new Date();
+  const turnosValidos = turnos.filter((t) => new Date(t.fechaHora) > ahora);
+
+  if (turnosValidos.length < turnos.length) {
+    guardarTurnos(turnosValidos);
+    console.log(
+      `Admin: ${
+        turnos.length - turnosValidos.length
+      } turnos obsoletos eliminados`
+    );
+    renderizarTablaTurnos();
+  }
+}
+
 function obtenerMedicos() {
   return JSON.parse(localStorage.getItem("medicos")) || [];
 }
@@ -763,6 +779,11 @@ function renderizarOpcionesMedicoTurno() {
   select.innerHTML = medicos
     .map((m) => `<option value="${m.id}">${m.apellido}, ${m.nombre}</option>`)
     .join("");
+  const inputFecha = document.getElementById("fechaHoraTurno");
+  if (inputFecha) {
+    const ahora = new Date();
+    inputFecha.min = ahora.toISOString().slice(0, 16);
+  }
 }
 
 const formTurno = document.getElementById("formTurno");
@@ -778,7 +799,15 @@ if (formTurno) {
       mostrarMensajeTurno("Todos los campos son obligatorios.", "danger");
       return;
     }
-
+    const fechaTurno = new Date(fechaHora);
+    const ahora = new Date();
+    if (fechaTurno <= ahora) {
+      mostrarMensajeTurno(
+        "No se pueden crear turnos con fechas pasadas, reintenta con nuevas fechas por favor crack",
+        "danger"
+      );
+      return;
+    }
     let turnos = obtenerTurnos();
 
     if (id) {
@@ -1005,4 +1034,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderizarTablaReservas();
   aplicarTemaCardsReservas();
+  limpiarTurnosObsoletosAdmin();
 });
