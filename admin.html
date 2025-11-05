@@ -62,6 +62,12 @@
                     Reservas
                 </button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="usuarios-tab" data-bs-toggle="tab" data-bs-target="#usuarios" type="button"
+                    role="tab" aria-controls="usuarios" aria-selected="false">
+                    Usuarios
+                </button>
+            </li>
         </ul>
         <div class="tab-content" id="adminTabsContent">
             <div class="tab-pane fade show active" id="medicos" role="tabpanel" aria-labelledby="medicos-tab">
@@ -319,6 +325,37 @@
                                 </thead>
                                 <tbody>
                                     <!-- dinamismo reservas -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="usuarios" role="tabpanel" aria-labelledby="usuarios-tab">
+                <h3 class="mb-3">Usuarios Registrados</h3>
+                <div class="card" id="cardTablaUsuarios">
+                    <div class="card-header">Lista de Usuarios del Sistema</div>
+                    <div class="card-body">
+                        <div id="usuariosCargando" class="text-center my-4">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+                        <div id="usuariosError" class="alert alert-danger d-none"></div>
+                        <div class="table-responsive mb-3">
+                            <table class="table table-striped align-middle" id="tablaUsuarios">
+                                <thead>
+                                    <tr>
+                                        <th>Avatar</th>
+                                        <th>Usuario</th>
+                                        <th>Nombre Completo</th>
+                                        <th>Email</th>
+                                        <th>Teléfono</th>
+                                        <th>Rol</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- dinamismo usuarios -->
                                 </tbody>
                             </table>
                         </div>
