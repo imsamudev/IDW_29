@@ -1,5 +1,4 @@
 import {
-  inicializarAdmin,
   inicializarMedicos,
   inicializarEspecialidades,
   inicializarObrasSociales,
@@ -33,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  inicializarAdmin();
   inicializarMedicos();
   inicializarEspecialidades();
   inicializarObrasSociales();
@@ -43,34 +41,70 @@ document.addEventListener("DOMContentLoaded", () => {
   if (window.location.pathname.endsWith("login.html")) {
     const form = document.getElementById("loginForm");
     const errorDiv = document.getElementById("loginError");
-    form.addEventListener("submit", function (e) {
+
+    form.addEventListener("input", function () {
+      errorDiv.style.display = "none";
+    });
+
+    form.addEventListener("submit", async function (e) {
       e.preventDefault();
       const username = form.username.value.trim();
       const password = form.password.value;
-      const adminUser = JSON.parse(localStorage.getItem("adminUser"));
-      if (
-        adminUser &&
-        username === adminUser.username &&
-        password === adminUser.password
-      ) {
-        localStorage.setItem("isAdminLogged", "true");
-        window.location.href = "admin.html";
-      } else {
-        errorDiv.textContent = "Usuario o contraseña incorrectos";
+
+      if (!username || !password) {
+        errorDiv.textContent = "Por favor complete todos los campos.";
+        errorDiv.style.display = "block";
+        return;
+      }
+
+      try {
+        const response = await fetch("https://dummyjson.com/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          sessionStorage.setItem("accessToken", data.accessToken);
+          sessionStorage.setItem(
+            "userData",
+            JSON.stringify({
+              id: data.id,
+              username: data.username,
+              email: data.email,
+              firstName: data.firstName,
+              lastName: data.lastName,
+            })
+          );
+          window.location.href = "admin.html";
+        } else {
+          errorDiv.textContent =
+            data.message === "Invalid credentials"
+              ? "Usuario o contraseña incorrectos"
+              : "Error al iniciar sesión. Intente nuevamente.";
+          errorDiv.style.display = "block";
+        }
+      } catch (error) {
+        console.error("Error de conexión:", error);
+        errorDiv.textContent =
+          "Error de conexión. Verifique su internet e intente nuevamente.";
         errorDiv.style.display = "block";
       }
     });
   }
 
   if (window.location.pathname.includes("admin.html")) {
-    if (!localStorage.getItem("isAdminLogged")) {
+    if (!sessionStorage.getItem("accessToken")) {
       window.location.href = "login.html";
       return;
     }
+
     const logoutBtn = document.getElementById("logoutBtn");
     if (logoutBtn) {
       logoutBtn.addEventListener("click", () => {
-        localStorage.removeItem("isAdminLogged");
+        sessionStorage.clear();
         window.location.href = "index.html";
       });
     }
