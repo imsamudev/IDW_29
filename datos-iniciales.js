@@ -1,8 +1,3 @@
-export const ADMIN_USER = {
-  username: "admin",
-  password: "admin123",
-};
-
 // ACLARACIÓN, las fotos de los médicos están representadas como urls de imágenes SOLO EN CASO DE inicialización, en admin.js está para base64 como se solicitó.
 export const MEDICOS_INICIALES = [
   {
@@ -230,13 +225,6 @@ export const RESERVAS_INICIALES = [
     valorTotal: 3200.0,
   },
 ];
-
-export function inicializarAdmin() {
-  if (!localStorage.getItem("adminUser")) {
-    localStorage.setItem("adminUser", JSON.stringify(ADMIN_USER));
-  }
-}
-
 export function inicializarEspecialidades() {
   if (!localStorage.getItem("especialidades")) {
     localStorage.setItem(
