@@ -985,6 +985,8 @@ const observer = new MutationObserver(() => {
   aplicarTemaCardsObraSocial();
   aplicarTemaCardsTurno();
   aplicarTemaCardsReservas();
+  aplicarTemaCardsUsuarios();
+
   renderizarTablaMedicos();
   renderizarTablaEspecialidades();
   renderizarTablaObrasSociales();
@@ -1012,6 +1014,98 @@ observer.observe(document.documentElement, {
   attributeFilter: ["data-bs-theme"],
 });
 
+// CRUD USUARIOS LECTURA desde dummy
+
+async function obtenerUsuariosDummyJSON() {
+  const token = sessionStorage.getItem("accessToken");
+  try {
+    const response = await fetch("https://dummyjson.com/users", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) throw new Error("Error al obtener usuarios");
+
+    const data = await response.json();
+    return data.users;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+}
+
+async function renderizarTablaUsuarios() {
+  const tbody = document.querySelector("#tablaUsuarios tbody");
+  const tabla = document.getElementById("tablaUsuarios");
+  const cargando = document.getElementById("usuariosCargando");
+  const errorDiv = document.getElementById("usuariosError");
+
+  if (!tbody || !tabla) return;
+
+  try {
+    cargando.classList.remove("d-none");
+    errorDiv.classList.add("d-none");
+
+    const usuarios = await obtenerUsuariosDummyJSON();
+
+    const theme = document.documentElement.getAttribute("data-bs-theme");
+    tabla.classList.remove("table-dark", "table-light");
+    if (theme === "dark") {
+      tabla.classList.add("table-dark");
+    } else {
+      tabla.classList.add("table-light");
+    }
+
+    tbody.innerHTML = "";
+
+    usuarios.forEach((usuario) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>
+          <img src="${usuario.image}" alt="${usuario.username}" 
+               class="img-fluid rounded-circle" 
+               style="width:48px; height:48px; object-fit:cover;">
+        </td>
+        <td>${usuario.username}</td>
+        <td>${usuario.firstName} ${usuario.lastName}</td>
+        <td>${usuario.email}</td>
+        <td>${usuario.phone || "-"}</td>
+        <td><span class="badge bg-primary">${usuario.role || "user"}</span></td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    cargando.classList.add("d-none");
+  } catch (error) {
+    cargando.classList.add("d-none");
+    errorDiv.textContent = "Error al cargar usuarios. Intente nuevamente.";
+    errorDiv.classList.remove("d-none");
+  }
+}
+
+function aplicarTemaCardsUsuarios() {
+  const theme = document.documentElement.getAttribute("data-bs-theme");
+  const cardTabla = document.getElementById("cardTablaUsuarios");
+  if (!cardTabla) return;
+
+  cardTabla.classList.remove(
+    "bg-light",
+    "bg-dark",
+    "text-light",
+    "text-dark",
+    "border-light",
+    "border-dark"
+  );
+
+  if (theme === "dark") {
+    cardTabla.classList.add("bg-dark", "text-light", "border-light");
+  } else {
+    cardTabla.classList.add("bg-light", "text-dark", "border-dark");
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   renderizarOpcionesEspecialidad();
   renderizarOpcionesObrasSociales();
@@ -1034,5 +1128,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderizarTablaReservas();
   aplicarTemaCardsReservas();
+
+  aplicarTemaCardsUsuarios();
+
+  const usuariosTab = document.getElementById("usuarios-tab");
+  if (usuariosTab) {
+    usuariosTab.addEventListener("shown.bs.tab", function () {
+      renderizarTablaUsuarios();
+    });
+  }
+
   limpiarTurnosObsoletosAdmin();
 });
