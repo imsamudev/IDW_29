@@ -67,15 +67,28 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await response.json();
 
         if (response.ok) {
+          const userResponse = await fetch(
+            `https://dummyjson.com/users/${data.id}`
+          );
+          const userData = await userResponse.json();
+
+          if (userData.role !== "admin") {
+            errorDiv.textContent =
+              "Acceso denegado: No eres Administrador, contacta a soporte.";
+            errorDiv.style.display = "block";
+            return;
+          }
+
           sessionStorage.setItem("accessToken", data.accessToken);
           sessionStorage.setItem(
             "userData",
             JSON.stringify({
-              id: data.id,
-              username: data.username,
-              email: data.email,
-              firstName: data.firstName,
-              lastName: data.lastName,
+              id: userData.id,
+              username: userData.username,
+              email: userData.email,
+              firstName: userData.firstName,
+              lastName: userData.lastName,
+              role: userData.role,
             })
           );
           window.location.href = "admin.html";
@@ -96,7 +109,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (window.location.pathname.includes("admin.html")) {
-    if (!sessionStorage.getItem("accessToken")) {
+    const token = sessionStorage.getItem("accessToken");
+    const userData = JSON.parse(sessionStorage.getItem("userData") || "{}");
+
+    if (!token || !userData || userData.role !== "admin") {
+      alert("Acceso denegado. Solo administradores pueden acceder.");
+      sessionStorage.clear();
       window.location.href = "login.html";
       return;
     }
